@@ -158,11 +158,6 @@
                 lg:bottom-[75px] lg:right-[130px] lg:w-[170px]
                 xl:bottom-[90px] xl:right-[160px] xl:w-[190px]
             " />
-
-        <a href="#sec2" class="mt-10 block">
-            <img src="src/down-arrow.svg" class="w-8 opacity-70 hover:opacity-100 transition" />
-        </a>
-
     </section>
 
     <!-- WHY DRINK COFFEE -->
@@ -173,16 +168,16 @@
                 class="
                     absolute
                     top-[40px] left-[40px] w-[110px]
-                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                    md:top-[60px] md:left-[140px] md:w-[140px]
-                    lg:top-[-50px] lg:left-[560px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[660px] xl:w-[230px]
+                    sm:left-[60px] sm:w-[130px]
+                    md:left-[140px] md:w-[140px]
+                    lg:left-[360px] lg:w-[200px]
+                    xl:left-[400px] xl:w-[230px]
                 "
             />
 
             <!-- Text -->
             <div>
-                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                <h2 class="font-helvetica mt-30 text-display-sm md:text-display-md md:mt-[10] mb-6 leading-tight">
                     Why Do We Drink Coffee?
                 </h2>
 
@@ -200,7 +195,7 @@
         </div>
 
         <!-- Chart -->
-        <div class="lg:col-span-2 mt-10">
+        <div class="lg:col-span-2 mt-10 flex flex-col items-center">
             <div id="chart_coffee_reasons" class="w-full max-w-4xl mx-auto"></div>
 
             <div class="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -217,76 +212,80 @@
 
 
     <!-- SLEEP HOURS -->
-    <section id="sec3" 
-    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
-        <img 
-            src="src/page2-bean.svg" 
-            class="
-                absolute
-                top-[40px] left-[40px] w-[110px]
-                sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                md:top-[60px] md:left-[40px] md:w-[140px]
-                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
-            "
-        />
+    <section id="sec3" class="mb-60">
+        <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-10 justify-stretch items-start px-6 md:px-14 lg:px-24 py-20">
+            <img 
+                src="src/page2-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                "
+            />
 
-        <!-- Text -->
-        <div>
-            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
-                Caffeine vs Sleep Hours
-            </h2>
-        <p class="font-calibri text-body text-espresso max-w-lg leading-relaxed">
-            Now we dive into how sleep and caffeine interact for different people. 
-            In the plotted graph comparing men and women, we reveal a surprising trend: individuals who get more 
-            sleep actually tend to drink more caffeine.        
-        </p>
-        </div>
+            <!-- Text -->
+            <div>
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                    Caffeine vs Sleep Hours
+                </h2>
+                <p class="font-calibri text-body text-espresso leading-relaxed">
+                    Now we dive into how sleep and caffeine interact for different people. 
+                    In the plotted graph comparing men and women, we reveal a surprising trend: individuals who get more 
+                    sleep actually tend to drink more caffeine.        
+                </p>
+            </div>
 
-        <!-- Illustration -->
-        <div class="flex justify-center lg:justify-start order-first lg:order-none">
-            <img src="src\page2-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+            <!-- Illustration -->
+            <div class="flex justify-center lg:justify-center order-first lg:order-none">
+                <img src="src\page2-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+            </div>
         </div>
 
         <!-- Chart -->
-        <div id="sleepHours" class="w-full mt-12 max-w-5xl mx-auto"></div>
+        <div class="lg:col-span-2 mt-10 flex flex-col items-center">
+            <div id="sleepHours" class="w-full mt-12 max-w-5xl mx-auto"></div>
+        </div>
     </section>
 
 
     <!-- SLEEP QUALITY -->
-    <section id="sec4" 
-    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
-        <img 
-            src="src/page3-bean.svg" 
-            class="
-                absolute
-                top-[40px] left-[40px] w-[110px]
-                sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                md:top-[60px] md:left-[40px] md:w-[140px]
-                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
-            "
-        />
+    <section id="sec4" class="mb-60">
+        <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+            <img 
+                src="src/page3-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                "
+            />
+            <!-- Illustration -->
+            <div class="flex justify-start lg:justify-start order-first lg:order-none">
+                <img src="src\page3-img.svg" class="w-66 md:w-82 lg:w-[28rem]" />
+            </div>
 
-        <!-- Text -->
-        <div>
-            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
-                Caffeine vs Sleep Quality
-            </h2>
+            <!-- Text -->
+            <div>
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                    Caffeine vs Sleep Quality
+                </h2>
 
-            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
-                In a stacked bar graph below paints a fuller picture of how caffeine intake relates not just to hours of 
-                sleep but to the quality of that sleep. From “poor” to “excellent,” each level of sleep quality is displayed 
-                alongside different levels of caffeine consumption.        
-            </p>
-        </div>
-
-        <!-- Illustration -->
-        <div class="flex justify-center lg:justify-start order-first lg:order-none">
-            <img src="src\page3-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+                <p class="font-calibri text-body text-espresso leading-relaxed">
+                    In a stacked bar graph below paints a fuller picture of how caffeine intake relates not just to hours of 
+                    sleep but to the quality of that sleep. From “poor” to “excellent,” each level of sleep quality is displayed 
+                    alongside different levels of caffeine consumption.        
+                </p>
+            </div>
         </div>
 
         <!-- Chart -->
+        <section class="mt-6 flex flex-col md:items-center md:justify-between gap-4">
             <!-- Section: Scatter plot -->
             <section class="mt-16">
 
@@ -315,125 +314,133 @@
 
                 <div id="sleepQuality" class="w-full mt-4"></div>
             </section>
+        </section>
     </section>
 
     <!-- ACTIVITY & AGE -->
-    <section id="sec5" 
-    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+    <section id="sec5" class="mb-60">
+        <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
 
-        <img 
-            src="src/page4-bean.svg" 
-            class="
-                absolute
-                top-[40px] left-[40px] w-[110px]
-                sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                md:top-[60px] md:left-[40px] md:w-[140px]
-                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
-            "
-        />
+            <img 
+                src="src/page4-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                "
+            />
+            <!-- Illustration -->
+            <div class="flex justify-start lg:justify-start order-first lg:order-none">
+                <img src="src\page4-img.svg" class="w-66 md:w-82 lg:w-[28rem]" />
+            </div>
 
-        <!-- Text -->
-        <div>
-            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
-                Coffee, Activity & Age
-            </h2>
+            <!-- Text -->
+            <div>
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                    Coffee, Activity & Age
+                </h2>
 
-            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
-                In a stacked bar graph below paints a fuller picture of how caffeine intake relates not just to hours of 
-                sleep but to the quality of that sleep. From “poor” to “excellent,” each level of sleep quality is displayed 
-                alongside different levels of caffeine consumption.        
-            </p>
-        </div>
-
-        <!-- Illustration -->
-        <div class="flex justify-center lg:justify-start order-first lg:order-none">
-            <img src="src\page4-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
-        </div>
+                <p class="font-calibri text-body text-espresso leading-relaxed">
+                    In a stacked bar graph below paints a fuller picture of how caffeine intake relates not just to hours of 
+                    sleep but to the quality of that sleep. From “poor” to “excellent,” each level of sleep quality is displayed 
+                    alongside different levels of caffeine consumption.        
+                </p>
+            </div>
 
         <!-- Chart -->
-        <div id="coffeeActivityByAgeSummary" class="mt-16 max-w-5xl mx-auto"></div>
+        <div class="lg:col-span-2 mt-10 flex flex-col items-center">
+            <div id="coffeeActivityByAgeSummary" class="mt-16 max-w-5xl mx-auto"></div>
+        </div>
     </section>
 
 
     <!-- STRESS -->
-    <section id="sec6" 
-    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
-        <img 
-            src="src/page5-bean.svg" 
-            class="
-                absolute
-                top-[40px] left-[40px] w-[110px]
-                sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                md:top-[60px] md:left-[40px] md:w-[140px]
-                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
-            "
-        />
+    <section id="sec6" class="mb-60">
+        <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+            <img 
+                src="src/page5-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                "
+            />
+            <!-- Illustration -->
+            <div class="flex justify-start lg:justify-start order-first lg:order-none">
+                <img src="src\page5-img.svg" class="w-66 md:w-82 lg:w-[28rem]" />
+            </div>
 
-        <!-- Text -->
-        <div>
-            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
-                Caffeine & Stress
-            </h2>
+            <!-- Text -->
+            <div>
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                    Caffeine & Stress
+                </h2>
 
-            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
-                Now we dive into how sleep and caffeine interact for different people. 
-                In the plotted graph comparing men and women, we reveal a surprising trend: individuals who get more 
-                sleep actually tend to drink more caffeine.        
-            </p>
-        </div>
-        <!-- Illustration -->
-        <div class="flex justify-center lg:justify-start order-first lg:order-none">
-            <img src="src\page5-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+                <p class="font-calibri text-body text-espresso leading-relaxed">
+                    Now we dive into how sleep and caffeine interact for different people. 
+                    In the plotted graph comparing men and women, we reveal a surprising trend: individuals who get more 
+                    sleep actually tend to drink more caffeine.        
+                </p>
+            </div>
         </div>
 
         <!-- Chart -->
-        <div id="stressCoffee" class="w-full mt-12 max-w-5xl mx-auto"></div>
+        <div class="lg:col-span-2 mt-10 flex flex-col items-center">
+            <div id="stressCoffee" class="w-full mt-12 max-w-5xl mx-auto"></div>
+        </div>
     </section>
 
 
     <!-- A DAY -->
-    <section id="sec7"
-        class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
-        <img 
-            src="src/page6-bean.svg" 
-            class="
-                absolute
-                top-[40px] left-[40px] w-[110px]
-                sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                md:top-[60px] md:left-[40px] md:w-[140px]
-                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
-            "
-        />
+    <section id="sec7" class="mb-60">
+        <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+            <img 
+                src="src/page6-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                "
+            />
+            <!-- Illustration -->
+            <div class="flex justify-start lg:justify-start order-first lg:order-none">
+                <img src="src\page6-img.svg" class="w-66 md:w-82 lg:w-[28rem]" />
+            </div>
 
-        <!-- Text -->
-        <div>
-            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
-                A Day In The Life Of A Coffee Lover
-            </h2>
+            <!-- Text -->
+            <div>
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                    A Day In The Life Of A Coffee Lover
+                </h2>
 
-            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
-                Here we will walk you through the story of caffeine; a fatigue cycle many of us fall into without realizing it. 
-                In this interactive timeline, we illustrate what happens throughout a person’s day, collecting data from our friends and 
-                family: how many hours of sleep a person gets, to their sleep quality and their regular, daily caffeine consumption.       
-            </p>
-        </div>
-
-        <!-- Illustration -->
-        <div class="flex justify-center lg:justify-start order-first lg:order-none">
-            <img src="src\page6-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+                <p class="font-calibri text-body text-espresso leading-relaxed">
+                    Here we will walk you through the story of caffeine; a fatigue cycle many of us fall into without realizing it. 
+                    In this interactive timeline, we illustrate what happens throughout a person’s day, collecting data from our friends and 
+                    family: how many hours of sleep a person gets, to their sleep quality and their regular, daily caffeine consumption.       
+                </p>
+            </div>
         </div>
 
         <!-- Chart -->
         <section class="w-full mt-12 max-w-5xl mx-auto">
-            <div id="ageChart"></div>
-            <div id="genderChart"></div>
-            <div class="mt-12" id="genderCoffeeChart"></div>
-            <div class="mt-12" id="weekdayActivityChart"></div>
-            <div class="mt-12" id="mentalChangeChart"></div>
-            <div class="mt-12" id="coffeeSleepMeanChart"></div>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-10">
+                <div id="ageChart" class="w-full md:w-1/2"></div>
+                <div id="genderChart" class="w-full md:w-1/2"></div>
+            </div>
+            <div class=" mt-10 flex flex-col items-center">
+                <div class="mt-12" id="genderCoffeeChart"></div>
+                <div class="mt-12" id="weekdayActivityChart"></div>
+                <div class="mt-12" id="coffeeSleepMeanChart"></div>
+            </div>
         </section>
     </section>
 
@@ -442,12 +449,12 @@
     <section id="sec8" class="min-h-screen px-6 md:px-14 lg:px-24 py-24">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
-            <!-- Left Illustration -->
+            <!-- Illustration -->
             <div class="lg:col-span-5 flex justify-center lg:justify-start">
-                <img src="src\page7-img.svg" class="w-64 md:w-72 lg:w-[26rem]" />
+                <img src="src\index-cup.svg" class="w-64 md:w-72 lg:w-[26rem]" />
             </div>
 
-            <!-- Right Text -->
+            <!-- Text -->
             <div class="lg:col-span-7">
                 <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso">
                     Reflect On Your Health
