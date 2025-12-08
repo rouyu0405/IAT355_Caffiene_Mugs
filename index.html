@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Vega Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <title>The Coffee Health</title>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --color-espresso: #362822;
+            --color-coffee: #F0C376;
+            --color-cream: #FAEDD6;
+
+            --font-helvetica: "Helvetica Neue", Helvetica, sans-serif;
+            --font-calibri: "Calibri", sans-serif;
+
+            --text-display-sm: 2.75rem;
+            --text-display-md: 4rem;
+            --text-display-lg: 8rem;
+            --text-body: 1rem;
+            --text-small: 0.875rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #sideNav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #sideNav .nav-item img {
+            width: 25px;
+            transition: transform 0.25s ease;
+        }
+
+        #sideNav .nav-item.active img {
+            transform: scale(1.15);
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-white relative">
+    <!-- SIDE NAV -->
+    <aside class="fixed right-15 top-1/2 -translate-y-1/2 space-y-6 z-50 hidden md:flex flex-col items-center">
+        <nav id="sideNav">
+            <a href="#sec1" class="nav-item" data-section="sec1">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>
+            <a href="#sec2" class="nav-item" data-section="sec2">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>
+            <a href="#sec3" class="nav-item" data-section="sec3">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>
+            <a href="#sec4" class="nav-item" data-section="sec4">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>
+            <a href="#sec5" class="nav-item" data-section="sec5">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>
+            <a href="#sec6" class="nav-item" data-section="sec6">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a> 
+            <a href="#sec7" class="nav-item" data-section="sec7">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>     
+            <a href="#sec8" class="nav-item" data-section="sec8">
+                <img src="src\bean-default.svg" 
+                    data-default="src\bean-default.svg" 
+                    data-active="src\bean-clicked.svg" />
+            </a>                                            
+        </nav>
+    </aside>
+
+    <!-- HERO -->
+    <section id="sec1"
+        class="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
+
+        <!-- Top Left -->
+        <img src="src/index-topLeft.svg"
+            class="
+                absolute
+                top-[40px] left-[40px] w-[110px]
+                sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                md:top-[60px] md:left-[40px] md:w-[140px]
+                lg:top-[70px] lg:left-[80px] lg:w-[200px]
+                xl:top-[80px] xl:left-[160px] xl:w-[230px]
+            " />
+
+        <!-- Top Right -->
+        <img src="src/index-topRight.svg"
+            class="
+                absolute
+                top-[20px] right-[40px] w-[110px]
+                sm:top-[35px] sm:right-[60px] sm:w-[130px]
+                md:top-[45px] md:right-[100px] md:w-[160px]
+                lg:top-[50px] lg:right-[80px] lg:w-[200px]
+                xl:top-[60px] xl:right-[160px] xl:w-[230px]
+            " />
+
+        <p class="font-calibri text-body text-espresso mt-6 text-center max-w-2xl">
+            A Visualization Narrative By Caffeine Mugs
+        </p>
+
+        <h1 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso text-center mb-4">
+            The Coffee Health
+        </h1>
+
+        <!-- Cup -->
+        <div class="relative w-full max-w-[400px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[580px] xl:max-w-[650px] mx-auto">
+            <img src="src/index-cup.svg" class="relative w-full z-10" />
+        </div>
+
+        <!-- Bottom Left -->
+        <img src="src/index-bottomLeft.svg"
+            class="
+                absolute
+                bottom-[50px] left-[40px] w-[100px]
+                sm:bottom-[60px] sm:left-[60px] sm:w-[120px]
+                md:bottom-[70px] md:left-[95px] md:w-[150px]
+                lg:bottom-[80px] lg:left-[130px] lg:w-[170px]
+                xl:bottom-[95px] xl:left-[160px] xl:w-[190px]
+            " />
+
+        <!-- Bottom Right -->
+        <img src="src/index-bottomRight.svg"
+            class="
+                absolute
+                bottom-[45px] right-[40px] w-[100px]
+                sm:bottom-[55px] sm:right-[60px] sm:w-[120px]
+                md:bottom-[65px] md:right-[95px] md:w-[150px]
+                lg:bottom-[75px] lg:right-[130px] lg:w-[170px]
+                xl:bottom-[90px] xl:right-[160px] xl:w-[190px]
+            " />
+
+        <a href="#sec2" class="mt-10 block">
+            <img src="src/down-arrow.svg" class="w-8 opacity-70 hover:opacity-100 transition" />
+        </a>
+
+    </section>
+
+    <!-- WHY DRINK COFFEE -->
+    <section id="sec2" class="mt-60 mb-60">
+        <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-10 justify-stretch items-start px-6 md:px-14 lg:px-24 py-20">
+            <img 
+                src="src/page1-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[140px] md:w-[140px]
+                    lg:top-[-50px] lg:left-[560px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[660px] xl:w-[230px]
+                "
+            />
+
+            <!-- Text -->
+            <div>
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                    Why Do We Drink Coffee?
+                </h2>
+
+                <p class="font-calibri text-body text-espresso leading-relaxed">
+                    Ever wonder why do so many of us reach for coffee every day? We highlight the top reasons 
+                    people drink coffee and the results might feel familiar. Most people drink it because they 
+                    genuinely enjoy the taste, while others rely on that boost of energy to get through the day.
+                </p>
+            </div>
+
+            <!-- Illustration -->
+            <div class="flex justify-center lg:justify-center order-first lg:order-none">
+                <img src="src/page1-cup.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="lg:col-span-2 mt-10">
+            <div id="chart_coffee_reasons" class="w-full max-w-4xl mx-auto"></div>
+
+            <div class="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <p class="font-calibri text-small md:text-body text-espresso">
+                    Data source:
+                    <a href="https://www.statista.com/statistics/1450363/reasons-for-drinking-coffee-in-the-us/"
+                        target="_blank" rel="noopener noreferrer" class="underline hover:text-coffee">
+                        Statista – Reasons for drinking coffee in the U.S.
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SLEEP HOURS -->
+    <section id="sec3" 
+    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+        <img 
+            src="src/page2-bean.svg" 
+            class="
+                absolute
+                top-[40px] left-[40px] w-[110px]
+                sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                md:top-[60px] md:left-[40px] md:w-[140px]
+                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+            "
+        />
+
+        <!-- Text -->
+        <div>
+            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                Caffeine vs Sleep Hours
+            </h2>
+        <p class="font-calibri text-body text-espresso max-w-lg leading-relaxed">
+            Now we dive into how sleep and caffeine interact for different people. 
+            In the plotted graph comparing men and women, we reveal a surprising trend: individuals who get more 
+            sleep actually tend to drink more caffeine.        
+        </p>
+        </div>
+
+        <!-- Illustration -->
+        <div class="flex justify-center lg:justify-start order-first lg:order-none">
+            <img src="src\page2-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+        </div>
+
+        <!-- Chart -->
+        <div id="sleepHours" class="w-full mt-12 max-w-5xl mx-auto"></div>
+    </section>
+
+
+    <!-- SLEEP QUALITY -->
+    <section id="sec4" 
+    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+        <img 
+            src="src/page3-bean.svg" 
+            class="
+                absolute
+                top-[40px] left-[40px] w-[110px]
+                sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                md:top-[60px] md:left-[40px] md:w-[140px]
+                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+            "
+        />
+
+        <!-- Text -->
+        <div>
+            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                Caffeine vs Sleep Quality
+            </h2>
+
+            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
+                In a stacked bar graph below paints a fuller picture of how caffeine intake relates not just to hours of 
+                sleep but to the quality of that sleep. From “poor” to “excellent,” each level of sleep quality is displayed 
+                alongside different levels of caffeine consumption.        
+            </p>
+        </div>
+
+        <!-- Illustration -->
+        <div class="flex justify-center lg:justify-start order-first lg:order-none">
+            <img src="src\page3-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+        </div>
+
+        <!-- Chart -->
+            <!-- Section: Scatter plot -->
+            <section class="mt-16">
+
+                <h2 class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mb-4">
+                    Individual Caffeine Intake and Corresponding Sleep Quality
+                </h2>
+
+                <div id="sleepQualityScatter" class="w-full"></div>
+
+                <!-- Description row -->
+                <div class="flex items-center gap-3 mt-4">
+                    <img src="src\bean-clicked.svg" alt="Average caffeine marker" class="w-5 h-5" />
+
+                    <p class="font-calibri text-small md:text-body text-espresso">
+                        This coffee bean marks the average caffeine intake for each sleep quality group. Hover over the bean
+                        to view the average intake.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section: Proportion chart -->
+            <section class="mt-16">
+                <h2 class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mb-4">
+                    Proportion of Sleep Quality Levels by Caffeine Intake
+                </h2>
+
+                <div id="sleepQuality" class="w-full mt-4"></div>
+            </section>
+    </section>
+
+    <!-- ACTIVITY & AGE -->
+    <section id="sec5" 
+    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+
+        <img 
+            src="src/page4-bean.svg" 
+            class="
+                absolute
+                top-[40px] left-[40px] w-[110px]
+                sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                md:top-[60px] md:left-[40px] md:w-[140px]
+                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+            "
+        />
+
+        <!-- Text -->
+        <div>
+            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                Coffee, Activity & Age
+            </h2>
+
+            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
+                In a stacked bar graph below paints a fuller picture of how caffeine intake relates not just to hours of 
+                sleep but to the quality of that sleep. From “poor” to “excellent,” each level of sleep quality is displayed 
+                alongside different levels of caffeine consumption.        
+            </p>
+        </div>
+
+        <!-- Illustration -->
+        <div class="flex justify-center lg:justify-start order-first lg:order-none">
+            <img src="src\page4-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+        </div>
+
+        <!-- Chart -->
+        <div id="coffeeActivityByAgeSummary" class="mt-16 max-w-5xl mx-auto"></div>
+    </section>
+
+
+    <!-- STRESS -->
+    <section id="sec6" 
+    class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+        <img 
+            src="src/page5-bean.svg" 
+            class="
+                absolute
+                top-[40px] left-[40px] w-[110px]
+                sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                md:top-[60px] md:left-[40px] md:w-[140px]
+                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+            "
+        />
+
+        <!-- Text -->
+        <div>
+            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                Caffeine & Stress
+            </h2>
+
+            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
+                Now we dive into how sleep and caffeine interact for different people. 
+                In the plotted graph comparing men and women, we reveal a surprising trend: individuals who get more 
+                sleep actually tend to drink more caffeine.        
+            </p>
+        </div>
+        <!-- Illustration -->
+        <div class="flex justify-center lg:justify-start order-first lg:order-none">
+            <img src="src\page5-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+        </div>
+
+        <!-- Chart -->
+        <div id="stressCoffee" class="w-full mt-12 max-w-5xl mx-auto"></div>
+    </section>
+
+
+    <!-- A DAY -->
+    <section id="sec7"
+        class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+        <img 
+            src="src/page6-bean.svg" 
+            class="
+                absolute
+                top-[40px] left-[40px] w-[110px]
+                sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                md:top-[60px] md:left-[40px] md:w-[140px]
+                lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+            "
+        />
+
+        <!-- Text -->
+        <div>
+            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                A Day In The Life Of A Coffee Lover
+            </h2>
+
+            <p class="font-calibri text-body text-espresso text-center max-w-2xl mt-6">
+                Here we will walk you through the story of caffeine; a fatigue cycle many of us fall into without realizing it. 
+                In this interactive timeline, we illustrate what happens throughout a person’s day, collecting data from our friends and 
+                family: how many hours of sleep a person gets, to their sleep quality and their regular, daily caffeine consumption.       
+            </p>
+        </div>
+
+        <!-- Illustration -->
+        <div class="flex justify-center lg:justify-start order-first lg:order-none">
+            <img src="src\page6-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+        </div>
+
+        <!-- Chart -->
+        <section class="w-full mt-12 max-w-5xl mx-auto">
+            <div id="ageChart"></div>
+            <div id="genderChart"></div>
+            <div class="mt-12" id="genderCoffeeChart"></div>
+            <div class="mt-12" id="weekdayActivityChart"></div>
+            <div class="mt-12" id="mentalChangeChart"></div>
+            <div class="mt-12" id="coffeeSleepMeanChart"></div>
+        </section>
+    </section>
+
+
+    <!-- REFLECT ON YOUR HEALTH -->
+    <section id="sec8" class="min-h-screen px-6 md:px-14 lg:px-24 py-24">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+            <!-- Left Illustration -->
+            <div class="lg:col-span-5 flex justify-center lg:justify-start">
+                <img src="src\page7-img.svg" class="w-64 md:w-72 lg:w-[26rem]" />
+            </div>
+
+            <!-- Right Text -->
+            <div class="lg:col-span-7">
+                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso">
+                    Reflect On Your Health
+                </h2>
+
+                <p class="font-calibri text-body text-espresso mt-6 max-w-xl leading-relaxed">
+                    Now it’s time to reflect on what you have learned about caffeine and your health. Play 
+                    around in the visualization dashboard and enter how many cups of coffee and sleep hours you consume daily. 
+                    You may be surprised to see how your health may be affected by caffeine, or not!
+                </p>
+            </div>
+        </div>
+
+        <!-- Input + Result dashboard -->
+        <section class="w-full mt-16 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+                <!-- Left: Input card -->
+                <div class="rounded-3xl border border-[#E5D2B5] bg-[#FFF9EF] p-8 shadow-sm">
+                    <h2 class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mb-4">
+                        Enter your daily habits
+                    </h2>
+
+                    <form id="healthForm" class="space-y-6" onsubmit="event.preventDefault(); analyzeHealth();">
+                        <!-- Gender -->
+                        <div>
+                            <label for="genderInput" class="block text-small font-helvetica text-espresso mb-2">
+                                Gender
+                            </label>
+                            <select id="genderInput"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 text-small font-helvetica focus:outline-none focus:ring-2 focus:ring-[#E9C98F]">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Age -->
+                        <div>
+                            <label for="ageInput" class="block text-small font-helvetica text-espresso mb-2">
+                                Age
+                            </label>
+                            <input id="ageInput" type="number" min="15" max="90" step="1" placeholder="For example 26"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 text-small font-helvetica focus:outline-none focus:ring-2 focus:ring-[#E9C98F]">
+                        </div>
+
+                        <!-- Coffee intake -->
+                        <div>
+                            <label for="coffeeInput" class="block text-small font-helvetica text-espresso mb-2">
+                                Cups of coffee per day
+                            </label>
+                            <input id="coffeeInput" type="number" min="0" max="15" step="0.1"
+                                placeholder="For example 2.5"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 text-small font-helvetica focus:outline-none focus:ring-2 focus:ring-[#E9C98F]">
+                        </div>
+
+                        <!-- Sleep hours -->
+                        <div>
+                            <label for="sleepInput" class="block text-small font-helvetica text-espresso mb-2">
+                                Sleep hours per night
+                            </label>
+                            <input id="sleepInput" type="number" min="0" max="14" step="0.1"
+                                placeholder="For example 7.0"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 text-small font-helvetica focus:outline-none focus:ring-2 focus:ring-[#E9C98F]">
+                        </div>
+
+                        <!-- Stress level -->
+                        <div>
+                            <label for="stressInput" class="block text-small font-helvetica text-espresso mb-2">
+                                Stress level (1–10, self rated)
+                            </label>
+                            <input id="stressInput" type="number" min="1" max="10" step="1" placeholder="For example 7"
+                                class="w-full border border-gray-300 rounded-xl px-4 py-2 text-small font-helvetica focus:outline-none focus:ring-2 focus:ring-[#E9C98F]">
+                        </div>
+
+                        <button type="submit"
+                            class="mt-4 inline-flex items-center justify-center rounded-[25px] px-8 py-3 bg-[#1E2E3E] text-white text-button font-helvetica transition-all duration-300 hover:shadow-[-6px_6px_0_#E9C98F] active:bg-[#E9C98F] active:text-[#362822] active:border active:border-[#4A2B18] active:shadow-none active:scale-95">
+                            Reflect with the dataset
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right: Result card -->
+                <div id="resultCard"
+                    class="rounded-3xl border border-[#E5D2B5] bg-white p-8 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h2 class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mb-4">
+                            Your Health Predictor
+                        </h2>
+
+                        <p id="loadingMessage" class="text-small md:text-body font-helvetica text-gray-500 mb-6">
+                            Enter your information on the left and see how you compare to our research.
+                        </p>
+
+                        <div id="vizContainer" class="space-y-8 hidden">
+                            <!-- Legend -->
+                            <div class="flex items-center space-x-6 mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <img src="src\bean-clicked.svg" alt="You legend" class="h-5 w-auto">
+                                    <span class="text-small font-helvetica text-espresso">You</span>
+                                </div>
+
+                                <div class="flex items-center space-x-3">
+                                    <img src="src\bean-default.svg" alt="Average legend" class="h-5 w-auto">
+                                    <span class="text-small font-helvetica text-espresso">Group average</span>
+                                </div>
+                            </div>
+
+                            <p id="summaryText"
+                                class="text-small md:text-body font-helvetica text-espresso leading-relaxed"></p>
+
+                            <!-- Coffee bar -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-small font-helvetica text-espresso">
+                                        Daily coffee intake
+                                    </span>
+                                    <span id="coffeeLabel" class="text-xs font-helvetica text-gray-500"></span>
+                                </div>
+
+                                <!-- Outer wrapper controlling bar + beans -->
+                                <div class="relative h-10">
+                                    <!-- Bar background -->
+                                    <div
+                                        class="absolute inset-x-0 bottom-0 h-4 rounded-full bg-[#F2E2C8] overflow-hidden">
+                                    </div>
+
+                                    <!-- User position bean -->
+                                    <div id="coffeeYouWrap" class="absolute flex flex-col items-center z-10"
+                                        style="top:-2px; left:50%; transform:translateX(-50%);">
+                                        <span class="text-[10px] font-helvetica text-[#1E2E3E] mb-1">You</span>
+                                        <img id="coffeeYou" src="src\bean-clicked.svg" alt="You indicator"
+                                            class="h-5 w-auto">
+                                    </div>
+
+                                    <!-- Average position bean -->
+                                    <div id="coffeeAvgWrap" class="absolute flex flex-col items-center z-10"
+                                        style="top:-2px; left:60%; transform:translateX(-50%);">
+                                        <span class="text-[10px] font-helvetica text-[#362822] mb-1">Avg</span>
+                                        <img id="coffeeAvg" src="src\bean-default.svg" alt="Average indicator"
+                                            class="h-5 w-auto">
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between text-[11px] font-helvetica text-gray-500">
+                                    <span>Lower intake</span>
+                                    <span>Higher intake</span>
+                                </div>
+                            </div>
+
+                            <!-- Sleep bar -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-small font-helvetica text-espresso">
+                                        Sleep hours per night
+                                    </span>
+                                    <span id="sleepLabel" class="text-xs font-helvetica text-gray-500"></span>
+                                </div>
+
+                                <!-- Outer wrapper -->
+                                <div class="relative h-10">
+                                    <!-- Bar background -->
+                                    <div
+                                        class="absolute inset-x-0 bottom-0 h-4 rounded-full bg-[#F2E2C8] overflow-hidden">
+                                    </div>
+
+                                    <!-- User position bean -->
+                                    <div id="sleepYouWrap" class="absolute flex flex-col items-center z-10"
+                                        style="top:-2px; left:50%; transform:translateX(-50%);">
+                                        <span class="text-[10px] font-helvetica text-[#1E2E3E] mb-1">You</span>
+                                        <img id="sleepYou" src="src\bean-clicked.svg" alt="You indicator"
+                                            class="h-5 w-auto">
+                                    </div>
+
+                                    <!-- Average position bean -->
+                                    <div id="sleepAvgWrap" class="absolute flex flex-col items-center z-10"
+                                        style="top:-2px; left:60%; transform:translateX(-50%);">
+                                        <span class="text-[10px] font-helvetica text-[#362822] mb-1">Avg</span>
+                                        <img id="sleepAvg" src="src\bean-default.svg" alt="Average indicator"
+                                            class="h-5 w-auto">
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between text-[11px] font-helvetica text-gray-500">
+                                    <span>Less sleep</span>
+                                    <span>More sleep</span>
+                                </div>
+                            </div>
+
+                            <!-- Stress bar -->
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="text-small font-helvetica text-espresso">
+                                        Stress level (self rated)
+                                    </span>
+                                    <span id="stressLabel" class="text-xs font-helvetica text-gray-500"></span>
+                                </div>
+
+                                <!-- Wrapper for bar + bean -->
+                                <div class="relative h-10">
+                                    <!-- Bar background with segments -->
+                                    <div
+                                        class="absolute inset-x-0 bottom-0 h-4 rounded-full bg-[#F2E2C8] overflow-hidden">
+                                        <div class="absolute inset-y-0 left-0 w-1/3 border-r border-white/60"></div>
+                                        <div class="absolute inset-y-0 left-1/3 w-1/3 border-r border-white/60"></div>
+                                    </div>
+
+                                    <!-- Bean indicator -->
+                                    <div id="stressYouWrap" class="absolute flex flex-col items-center z-10"
+                                        style="top:-2px; left:50%; transform:translateX(-50%);">
+                                        <span class="text-[10px] font-helvetica text-[#1E2E3E] mb-1">You</span>
+                                        <img id="stressYou" src="src\bean-clicked.svg" alt="You indicator"
+                                            class="h-5 w-auto">
+                                    </div>
+                                </div>
+
+                                <div class="flex justify-between text-[11px] font-helvetica text-gray-500">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-6 text-[11px] md:text-xs font-helvetica text-gray-500">
+                        Disclaimer: This dashboard is for personal reflection only. It is based on patterns from
+                        Caffeine Mugs’ caffeine and health datasets and research, and does not provide medical advice.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Final Insights -->
+        <div class="mt-24">
+            <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso">
+                Final Insights
+            </h2>
+
+            <p class="font-calibri text-body text-espresso mt-6 max-w-3xl leading-relaxed">
+                Now it’s time to reflect on what you have learned about caffeine and your health. You might be surprised
+                to see how your habits compare to others.
+            </p>
+        </div>
+    </section>
+
+    <!-- Script -->
+    <script src="main.js"></script>
+
+    <!-- Footer -->
+    <footer
+    class="w-full py-10 px-8 md:px-20 lg:px-28 mt-20 font-calibri text-[#362822] bg-[#F8EBD8] text-small md:text-body">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            <div>
+                <h3 class="font-semibold mb-2">Design</h3>
+                <p>Jasmine Bamba</p>
+                <p>Sienna Wu</p>
+            </div>
+            <div>
+                <h3 class="font-semibold mb-2">Developer</h3>
+                <p>Elizabeth Liao</p>
+                <p>Sienna Wu</p>
+            </div>
+            <div class="text-left md:text-right">
+                <h3 class="font-semibold mb-2">IAT 355 (Fall 2025) | Final Project</h3>
+                <p>© 2025 Caffeine Mugs</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
