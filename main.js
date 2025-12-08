@@ -432,7 +432,7 @@ const stressCoffeeBaseSpec = {
                     field: "Stress_Level",
                     type: "nominal",
                     scale: {
-                        range: ["#F0C376", "#183348", "#7A2E21"]
+                        range: ["#F0C376", "#183348", "#6E6E6E"]
                     },
                     legend: { title: "Stress level" }
                 }
@@ -466,7 +466,7 @@ const stressCoffeeBaseSpec = {
                     field: "Stress_Level",
                     type: "nominal",
                     scale: {
-                        range: ["#F0C376", "#183348", "#7A2E21"]
+                        range: ["#F0C376", "#183348", "#6E6E6E"]
                     },
                     legend: null
                 },
@@ -650,6 +650,7 @@ const coffeeReasonsBaseSpec = {
     // width and height will be added dynamically in renderCoffeeReasonsChart
 
     layer: [
+        // Bar layer
         {
             mark: {
                 type: "bar",
@@ -662,8 +663,12 @@ const coffeeReasonsBaseSpec = {
                     sort: "-x",
                     title: null,
                     axis: {
-                        labelFontSize: 14,
-                        labelColor: "#4A2B18"
+                        labelFont: "Calibri",
+                        labelFontSize: 20,
+                        labelFontWeight: "bold",
+                        labelColor: "#4A2B18",
+                        labelPadding: 15,
+                        labelLimit: 0
                     }
                 },
                 x: {
@@ -685,25 +690,25 @@ const coffeeReasonsBaseSpec = {
                 ]
             }
         },
+
+        // Text labels layer (percent values on the right)
         {
             mark: {
                 type: "text",
                 align: "left",
                 baseline: "middle",
                 dx: 5,
-                fontSize: 12,
+                font: "Calibri",
+                fontSize: 16,
+                fontWeight: "bold",
                 color: "#362822"
             },
             encoding: {
                 y: {
                     field: "Reason",
                     type: "nominal",
-                    sort: "-x",
-                    axis: {
-                        labelFontSize: 13,
-                        labelColor: "#4A2B18",
-                        labelPadding: 15
-                    }
+                    sort: "-x"
+                    // Do not define axis here so it uses the bar layer axis styling
                 },
                 x: {
                     field: "Percent",
@@ -726,6 +731,7 @@ const coffeeReasonsBaseSpec = {
         }
     }
 };
+
 
 // Render function for responsive bar chart
 function renderCoffeeReasonsChart() {
@@ -762,9 +768,10 @@ function renderCoffeeReasonsChart() {
 // Initial render
 renderCoffeeReasonsChart();
 
+
 //Data from our survey
-// Age Distribution Pie Chart (Using Project Theme Colors)
-const ageDistributionSpec = {
+// Base spec for Age distribution donut chart
+const ageDistributionBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: {
@@ -780,13 +787,11 @@ const ageDistributionSpec = {
         }
     ],
 
-    width: 320,
-    height: 320,
+    // width / height / radius will be added in renderAgeChart
 
     mark: {
-        type: "arc",
-        innerRadius: 70,     // donut style
-        outerRadius: 140
+        type: "arc"
+        // innerRadius and outerRadius will be set dynamically
     },
 
     encoding: {
@@ -806,7 +811,7 @@ const ageDistributionSpec = {
                     "#362822", // espresso
                     "#F0C376", // coffee
                     "#F7ECD7", // cream
-                    "#1A3447",  // dark blue
+                    "#1A3447", // dark blue
                     "#D26946"
                 ]
             }
@@ -820,11 +825,59 @@ const ageDistributionSpec = {
     }
 };
 
-// Render the visualization
-vegaEmbed("#ageChart", ageDistributionSpec);
+// Render age donut chart (responsive)
+function renderAgeChart() {
+    const container = document.getElementById("ageChart");
+    if (!container) return;
+
+    // Get container width
+    let containerWidth = container.clientWidth || 320;
+
+    // Limit max width similar to original
+    const maxWidth = 320;
+    const chartWidth = Math.min(containerWidth, maxWidth);
+
+    // Make the chart square
+    const chartHeight = chartWidth;
+
+    // Base radii used in the original design
+    const baseWidth = 320;
+    const baseOuterRadius = 140;
+    const baseInnerRadius = 70;
+
+    // Scale radii with width
+    const scaleFactor = chartWidth / baseWidth;
+    let outerRadius = baseOuterRadius * scaleFactor;
+    let innerRadius = baseInnerRadius * scaleFactor;
+
+    // Ensure the donut fits inside the chart (a little padding)
+    const maxRadius = chartWidth / 2 - 5;
+    if (outerRadius > maxRadius) {
+        outerRadius = maxRadius;
+        innerRadius = outerRadius / 2;
+    }
+
+    // Build final spec with dynamic size and radii
+    const ageDistributionSpec = {
+        ...ageDistributionBaseSpec,
+        width: chartWidth,
+        height: chartHeight,
+        mark: {
+            ...ageDistributionBaseSpec.mark,
+            innerRadius,
+            outerRadius
+        }
+    };
+
+    vegaEmbed("#ageChart", ageDistributionSpec, { actions: false });
+}
+
+// Initial render
+renderAgeChart();
+
 
 // Gender Distribution Pie Chart (Using Project Theme Colors)
-const genderDistributionSpec = {
+const genderDistributionBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: {
@@ -839,13 +892,11 @@ const genderDistributionSpec = {
         }
     ],
 
-    width: 320,
-    height: 320,
+    // width / height / radius will be added in renderGenderChart
 
     mark: {
-        type: "arc",
-        innerRadius: 70,   // donut style
-        outerRadius: 140
+        type: "arc"
+        // innerRadius and outerRadius will be set dynamically
     },
 
     encoding: {
@@ -876,11 +927,59 @@ const genderDistributionSpec = {
     }
 };
 
-// Render gender chart
-vegaEmbed("#genderChart", genderDistributionSpec);
+// Render gender donut chart (responsive)
+function renderGenderChart() {
+    const container = document.getElementById("genderChart");
+    if (!container) return;
+
+    // Get container width
+    let containerWidth = container.clientWidth || 320;
+
+    // Limit max width similar to original
+    const maxWidth = 320;
+    const chartWidth = Math.min(containerWidth, maxWidth);
+
+    // Make the chart square
+    const chartHeight = chartWidth;
+
+    // Base radii used in the original design
+    const baseWidth = 320;
+    const baseOuterRadius = 140;
+    const baseInnerRadius = 70;
+
+    // Scale radii with width
+    const scaleFactor = chartWidth / baseWidth;
+    let outerRadius = baseOuterRadius * scaleFactor;
+    let innerRadius = baseInnerRadius * scaleFactor;
+
+    // Ensure the donut fits inside the chart (a little padding)
+    const maxRadius = chartWidth / 2 - 5;
+    if (outerRadius > maxRadius) {
+        outerRadius = maxRadius;
+        innerRadius = outerRadius / 2;
+    }
+
+    // Build final spec with dynamic size and radii
+    const genderDistributionSpec = {
+        ...genderDistributionBaseSpec,
+        width: chartWidth,
+        height: chartHeight,
+        mark: {
+            ...genderDistributionBaseSpec.mark,
+            innerRadius,
+            outerRadius
+        }
+    };
+
+    vegaEmbed("#genderChart", genderDistributionSpec, { actions: false });
+}
+
+// Initial render
+renderGenderChart();
+
 
 // Gender vs Coffee Intake (Boxplot)
-const genderCoffeeSpec = {
+const genderCoffeeBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: {
@@ -904,8 +1003,7 @@ const genderCoffeeSpec = {
         }
     ],
 
-    width: 420,
-    height: 320,
+    // width and height will be added dynamically in renderGenderCoffeeChart
 
     mark: {
         type: "boxplot",
@@ -919,7 +1017,9 @@ const genderCoffeeSpec = {
             field: "Gender",
             type: "nominal",
             title: "Gender",
-            axis: { labelAngle: 0 }
+            axis: {
+                labelAngle: 0
+            }
         },
 
         // Coffee cups on the y-axis
@@ -950,12 +1050,45 @@ const genderCoffeeSpec = {
     }
 };
 
-// Render Gender vs Coffee chart
-vegaEmbed("#genderCoffeeChart", genderCoffeeSpec);
+// Render Gender vs Coffee chart (responsive)
+// Render Gender vs Coffee chart (responsive, width and height scale together)
+function renderGenderCoffeeChart() {
+    const container = document.getElementById("genderCoffeeChart");
+    if (!container) return;
+
+    // Get current container width
+    let containerWidth = container.clientWidth || 420;
+
+    // Allow the chart to grow up to maxWidth
+    const maxWidth = 600;
+    const chartWidth = Math.min(containerWidth, maxWidth);
+
+    // Base design size
+    const baseWidth = 420;
+    const baseHeight = 320;
+
+    // Keep the same aspect ratio as the base chart
+    const scaleFactor = chartWidth / baseWidth;
+    const chartHeight = baseHeight * scaleFactor;   // height scales with width
+
+    // Build final spec with dynamic width and height
+    const genderCoffeeSpec = {
+        ...genderCoffeeBaseSpec,
+        width: chartWidth,
+        height: chartHeight
+    };
+
+    vegaEmbed("#genderCoffeeChart", genderCoffeeSpec, { actions: false });
+}
+
+// Initial render
+renderGenderCoffeeChart();
+
 
 // Weekday Activities Frequency Bar Chart
 
-const weekdayActivitySpec = {
+// Base spec for weekday activity chart (no fixed width/height here)
+const weekdayActivityBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: {
@@ -975,21 +1108,15 @@ const weekdayActivitySpec = {
     },
 
     transform: [
-        {
-            calculate: "datum.Count + ''",
-            as: "Count_Label"
-        }
+        { calculate: "datum.Count + ''", as: "Count_Label" }
     ],
 
-    width: 520,
-    height: { step: 32 },
-
     layer: [
+        // Bar layer
         {
             mark: {
                 type: "bar",
-                cornerRadius: 3,
-                size: 25
+                cornerRadius: 3
             },
             encoding: {
                 y: {
@@ -998,54 +1125,48 @@ const weekdayActivitySpec = {
                     sort: "-x",
                     title: null,
                     axis: {
-                        labelFontSize: 14,
+                        labelFont: "Calibri",
+                        labelFontSize: 20,      // will be overridden dynamically
+                        labelFontWeight: "bold",
                         labelColor: "#4A2B18",
-                        labelPadding: 20
+                        labelPadding: 15,
+                        labelLimit: 0           // no truncation
                     }
                 },
                 x: {
                     field: "Count",
                     type: "quantitative",
                     title: null,
+                    // Let Vega choose a nice domain so bars are not too long
+                    scale: {
+                        domain: [0, 40]
+                    },
                     axis: {
                         grid: false,
                         ticks: false,
                         labels: false
                     }
                 },
-                color: {
-                    value: "#362822" // espresso color
-                },
-                tooltip: [
-                    { field: "Activity", title: "Activity" },
-                    { field: "Count", title: "Responses" }
-                ]
+                color: { value: "#F0C376" }
             }
         },
 
-        // Text label to the right of the bar
+        // Right-side labels (numbers at the end of bars)
         {
             mark: {
                 type: "text",
                 align: "left",
                 baseline: "middle",
                 dx: 5,
-                fontSize: 13,
+                font: "Calibri",
+                fontSize: 16,                // will be overridden dynamically
+                fontWeight: "bold",
                 color: "#362822"
             },
             encoding: {
-                y: {
-                    field: "Activity",
-                    type: "nominal",
-                    sort: "-x"
-                },
-                x: {
-                    field: "Count",
-                    type: "quantitative"
-                },
-                text: {
-                    field: "Count_Label"
-                }
+                y: { field: "Activity", type: "nominal", sort: "-x" },
+                x: { field: "Count", type: "quantitative" },
+                text: { field: "Count_Label" }
             }
         }
     ],
@@ -1060,144 +1181,80 @@ const weekdayActivitySpec = {
     }
 };
 
-// Render activity chart
-vegaEmbed("#weekdayActivityChart", weekdayActivitySpec, { actions: false });
+
+// Render function for responsive weekday activity chart
+function renderWeekdayActivityChart() {
+    const container = document.getElementById("weekdayActivityChart");
+    if (!container) return;
+
+    // Use actual container width
+    let containerWidth = container.clientWidth || 520;
+
+    const baseWidth = 520;
+    const baseStep = 40;          // slightly tighter than 48
+    const chartWidth = containerWidth;
+    const scaleFactor = chartWidth / baseWidth;
+
+    // Scale row step with width, within a reasonable range
+    let barStep = baseStep * scaleFactor;
+    const minStep = 28;
+    const maxStep = 60;
+    barStep = Math.max(minStep, Math.min(barStep, maxStep));
+
+    // Dynamic font sizes so text also reacts to width
+    const axisFontSize = Math.max(12, Math.min(20, 20 * scaleFactor));   // y-axis labels
+    const labelFontSize = Math.max(12, Math.min(18, 16 * scaleFactor));  // right-side numbers
+
+    // Build final spec with dynamic width and height
+    const weekdayActivitySpec = {
+        ...weekdayActivityBaseSpec,
+        width: chartWidth,
+        height: { step: barStep }
+    };
+
+    // Override y-axis font size
+    weekdayActivitySpec.layer[0].encoding.y.axis = {
+        ...weekdayActivitySpec.layer[0].encoding.y.axis,
+        labelFontSize: axisFontSize
+    };
+
+    // Override right-side label font size
+    weekdayActivitySpec.layer[1].mark = {
+        ...weekdayActivitySpec.layer[1].mark,
+        fontSize: labelFontSize
+    };
+
+    vegaEmbed("#weekdayActivityChart", weekdayActivitySpec, { actions: false });
+}
+
+// Initial render
+renderWeekdayActivityChart();
 
 
-// Mental State Change After Coffee (Frequency Bar Chart)
-const mentalChangeSpec = {
-    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
-    data: {
-        url: "Responses.csv"
-    },
-
-    transform: [
-        {
-            // Convert mental state rating to a numeric field
-            calculate: "toNumber(datum['After drinking coffee, do you feel a change in your mental state?'])",
-            as: "MentalChange"
-        },
-        {
-            // Keep only valid numeric values
-            filter: "isValid(datum.MentalChange) && !isNaN(datum.MentalChange)"
-        },
-        {
-            // Turn number into string label like "1", "2", ..., for cleaner axis
-            calculate: "toString(datum.MentalChange)",
-            as: "MentalChangeLabel"
-        }
-    ],
-
-    width: 520,
-    height: { step: 40 },
-
-    layer: [
-        {
-            mark: {
-                type: "bar",
-                cornerRadius: 3,
-                size: 22  // thinner bar → more space between bars
-            },
-            encoding: {
-                // Vertical: rating levels 1–5
-                y: {
-                    field: "MentalChangeLabel",
-                    type: "nominal",
-                    sort: "ascending",
-                    title: "Perceived mental change (1–5)",
-                    axis: {
-                        labelFontSize: 14,
-                        labelColor: "#4A2B18",
-                        labelPadding: 12
-                    }
-                },
-                // Horizontal: count of responses for each rating
-                x: {
-                    aggregate: "count",
-                    field: "MentalChange",
-                    type: "quantitative",
-                    title: null,
-                    axis: {
-                        grid: false,
-                        ticks: false,
-                        labels: false
-                    }
-                },
-                color: {
-                    value: "#362822" // espresso color
-                },
-                tooltip: [
-                    { field: "MentalChangeLabel", title: "Rating (1–5)" },
-                    { aggregate: "count", field: "MentalChange", title: "Responses" }
-                ]
-            }
-        },
-        {
-            // Text label on the right of each bar showing the count
-            mark: {
-                type: "text",
-                align: "left",
-                baseline: "middle",
-                dx: 8,
-                fontSize: 13,
-                color: "#362822"
-            },
-            encoding: {
-                y: {
-                    field: "MentalChangeLabel",
-                    type: "nominal",
-                    sort: "ascending"
-                },
-                x: {
-                    aggregate: "count",
-                    field: "MentalChange",
-                    type: "quantitative"
-                },
-                text: {
-                    aggregate: "count",
-                    field: "MentalChange"
-                }
-            }
-        }
-    ],
-
-    config: {
-        view: { stroke: null },
-        axis: {
-            domain: false,
-            grid: false,
-            ticks: false
-        }
-    }
-};
-
-// Render mental state change chart
-vegaEmbed("#mentalChangeChart", mentalChangeSpec, { actions: false });
-
-
-// Coffee Cups vs Sleep Duration (Mean + Error Bars)
-const coffeeSleepMeanSpec = {
+// Base spec for Coffee vs Sleep Duration (mean ± stdev)
+const coffeeSleepMeanBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: { url: "Responses.csv" },
 
     transform: [
-        // Parse coffee cups
+        // Parse coffee cups into a numeric field
         {
             calculate: "toNumber(datum['How many cups of coffee do you normally drink in a day? (1 cup ~ 300mL)'])",
             as: "CoffeeCups"
         },
         {
+            // Keep only valid numeric values for coffee cups
             filter: "isValid(datum.CoffeeCups) && !isNaN(datum.CoffeeCups)"
         },
 
-        // Parse sleep time
+        // Parse sleep time as a date on a fixed day
         {
             calculate: "toDate('2000-01-01 ' + datum['What time do you typically sleep on a weekday?'])",
             as: "SleepTime"
         },
-        // Parse wake time
+        // Parse wake time as a date on the next day
         {
             calculate: "toDate('2000-01-02 ' + datum['What time do you typically wake up on a weekday?'])",
             as: "WakeTime"
@@ -1210,24 +1267,38 @@ const coffeeSleepMeanSpec = {
             as: "SleepDurationHours"
         },
         {
+            // Filter out unrealistic sleep durations
             filter: "datum.SleepDurationHours > 0 && datum.SleepDurationHours < 16"
         }
     ],
 
-    width: 520,
-    height: 320,
+    // width and height will be added dynamically in renderCoffeeSleepMeanChart
 
     layer: [
         // Error bars (mean ± stdev)
         {
-            mark: { type: "errorbar", ticks: true, rule: true, color: "#362822" },
+            mark: {
+                type: "errorbar",
+                ticks: true,
+                rule: true,
+                color: "#362822"
+                // with ordinal x, the horizontal ticks will span the band width
+            },
             encoding: {
                 x: {
                     field: "CoffeeCups",
                     type: "ordinal",
                     sort: "ascending",
                     title: "Daily coffee intake (cups)",
-                    axis: { labelFontSize: 13, labelColor: "#4A2B18" }
+                    axis: {
+                        labelAngle: 0,            // keep labels horizontal
+                        labelFontSize: 13,
+                        labelColor: "#4A2B18"
+                    },
+                    scale: {
+                        paddingInner: 0.3,        // control spacing between categories
+                        paddingOuter: 0.2
+                    }
                 },
                 y: {
                     field: "SleepDurationHours",
@@ -1248,11 +1319,25 @@ const coffeeSleepMeanSpec = {
                 color: "#362822"
             },
             encoding: {
-                x: { field: "CoffeeCups", type: "ordinal", sort: "ascending" },
-                y: { field: "SleepDurationHours", type: "quantitative", aggregate: "mean" },
+                x: {
+                    field: "CoffeeCups",
+                    type: "ordinal",
+                    sort: "ascending",
+                    axis: { labelAngle: 0 }
+                },
+                y: {
+                    field: "SleepDurationHours",
+                    type: "quantitative",
+                    aggregate: "mean"
+                },
                 tooltip: [
                     { field: "CoffeeCups", title: "Cups" },
-                    { field: "SleepDurationHours", aggregate: "mean", title: "Avg Sleep (hrs)", format: ".2f" }
+                    {
+                        field: "SleepDurationHours",
+                        aggregate: "mean",
+                        title: "Avg Sleep (hrs)",
+                        format: ".2f"
+                    }
                 ]
             }
         }
@@ -1260,11 +1345,50 @@ const coffeeSleepMeanSpec = {
 
     config: {
         view: { stroke: null },
-        axis: { grid: false, ticks: false, domain: false }
+        axis: {
+            grid: false,
+            ticks: false,
+            domain: false
+        }
     }
 };
 
-vegaEmbed("#coffeeSleepMeanChart", coffeeSleepMeanSpec, { actions: false });
+// Render function for responsive Coffee vs Sleep chart (proportional width/height)
+function renderCoffeeSleepMeanChart() {
+    const container = document.getElementById("coffeeSleepMeanChart");
+    if (!container) return;
+
+    // Get current container width
+    let containerWidth = container.clientWidth || 520;
+
+    // Allow chart to grow up to a larger maximum width if needed
+    const maxWidth = 600;
+    const chartWidth = Math.min(containerWidth, maxWidth);
+
+    // Base design dimensions
+    const baseWidth = 520;
+    const baseHeight = 320;
+
+    // Keep consistent aspect ratio by scaling height with width
+    const scaleFactor = chartWidth / baseWidth;
+    const chartHeight = baseHeight * scaleFactor;
+
+    // Build final spec with dynamic width and height
+    const coffeeSleepMeanSpec = {
+        ...coffeeSleepMeanBaseSpec,
+        width: chartWidth,
+        height: chartHeight
+    };
+
+    vegaEmbed("#coffeeSleepMeanChart", coffeeSleepMeanSpec, { actions: false });
+}
+
+
+// Initial render
+renderCoffeeSleepMeanChart();
+
+
+
 
 
 
@@ -1281,8 +1405,14 @@ window.addEventListener("resize", () => {
         renderSleepQualityStackedChart();
         renderCoffeeActivityByAgeSummary();
         renderStressCoffeeChart();
+        renderWeekdayActivityChart();
+        renderCoffeeSleepMeanChart();
+        renderGenderCoffeeChart();
+        renderGenderChart();
+        renderAgeChart();
     }, 200);
 });
+
 
 
 // const sleepQualityHeatmapSpec = {
