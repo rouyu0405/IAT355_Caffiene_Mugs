@@ -270,7 +270,7 @@ const sleepQualityBaseSpec = {
                     sort: ["Poor", "Fair", "Good", "Excellent"]
                 },
                 url: {
-                    value: "src/coffeeBean_You.svg"
+                    value: "src/bean-clicked.svg"
                 },
                 tooltip: [
                     { field: "Sleep_Quality", title: "Sleep quality" },
@@ -283,8 +283,6 @@ const sleepQualityBaseSpec = {
                 ]
             }
         }
-
-
     ]
 };
 
@@ -1388,9 +1386,255 @@ function renderCoffeeSleepMeanChart() {
 renderCoffeeSleepMeanChart();
 
 
+//testimony scroll
+class TestimonialCarousel {
+  constructor(options) {
+    // Elements
+    this.beanRow = document.getElementById(options.beanRow);
+    this.textEl = document.getElementById(options.text);
+    this.infoEl = document.getElementById(options.info);
+    this.section = document.getElementById(options.section);
+
+    // Data
+    this.testimonials = [];
+    this.currentIndex = 0;
+
+    // Layout
+    this.windowSize = 0;
+    this.middleIndex = 0;
+
+    // Timer
+    this.autoRotateTimer = null;
+    this.rotateDelay = options.rotateDelay || 8000;
+    this.sectionVisible = false;
+
+    // Assets
+    this.beanDefault = options.beanDefault;
+    this.beanActive = options.beanActive;
+
+    // Init
+    this.setupObserver();
+    this.setupResize();
+    this.loadCSV(options.csv);
+  }
+
+
+  getWindowSize() {
+    const w = window.innerWidth;
+    if (w < 480) return 3;
+    if (w < 900) return 5;
+    if (w < 1400) return 5;
+    return 5;
+  }
+
+  updateWindowSize() {
+    this.windowSize = this.getWindowSize();
+    this.middleIndex = Math.floor(this.windowSize / 2);
+  }
+
+  wrap(i) {
+    return (i + this.testimonials.length) % this.testimonials.length;
+  }
+
+
+    renderBeans() {
+    if (!this.testimonials.length) return;
+
+    this.beanRow.innerHTML = "";
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < this.windowSize; i++) {
+        const realIndex = this.wrap(this.currentIndex - this.middleIndex + i);
+        const bean = document.createElement("img");
+
+        const isCenter = i === this.middleIndex;
+
+        bean.src = isCenter ? this.beanActive : this.beanDefault;
+        bean.className = "bean";
+
+        // Add animation class
+        if (isCenter) {
+        bean.classList.add("center-bean-anim");
+        } else {
+        bean.classList.add("bean-anim");
+        }
+
+        // Click to jump
+        bean.addEventListener("click", () => {
+        this.currentIndex = realIndex;
+        this.updateTestimony(true);
+        this.renderBeans();
+        });
+
+        frag.appendChild(bean);
+
+        // Force async so CSS transition triggers
+        requestAnimationFrame(() => {
+        setTimeout(() => {
+            bean.classList.add("show");
+        }, 10);
+        });
+    }
+
+    this.beanRow.appendChild(frag);
+    }
+
+applyBeanSlide(direction) {
+  this.beanRow.classList.remove("slide-left", "slide-right");
+  void this.beanRow.offsetWidth;
+  if (direction === "left") {
+    this.beanRow.classList.add("slide-left");
+  } else {
+    this.beanRow.classList.add("slide-right");
+  }
+  setTimeout(() => {
+    this.beanRow.classList.remove("slide-left", "slide-right");
+  }, 450);
+}
 
 
 
+animateText() {
+  const textEl = this.textEl;
+  const infoEl = this.infoEl;
+
+  // cancel existing animations
+  if (textEl.getAnimations) textEl.getAnimations().forEach(a => a.cancel());
+  if (infoEl.getAnimations) infoEl.getAnimations().forEach(a => a.cancel());
+
+  // Keyframes: start slightly down + invisible -> move up + visible
+  const keyframes = [
+    { opacity: 0, transform: 'translateY(12px)' },
+    { opacity: 1, transform: 'translateY(0)' }
+  ];
+
+  const duration = 550; // ms
+
+  // If browser supports Web Animations API
+  if (textEl.animate) {
+    // ensure starting state
+    textEl.style.opacity = 0;
+    textEl.style.transform = 'translateY(12px)';
+    infoEl.style.opacity = 0;
+    infoEl.style.transform = 'translateY(12px)';
+
+    // Animate text
+    textEl.animate(keyframes, {
+      duration,
+      easing: 'cubic-bezier(.2,.9,.3,1)',
+      fill: 'forwards'
+    });
+
+    // Slight stagger for info
+    infoEl.animate(keyframes, {
+      duration,
+      easing: 'cubic-bezier(.2,.9,.3,1)',
+      fill: 'forwards',
+      delay: 80
+    });
+    return;
+  }
+
+  this.textEl.classList.remove('show');
+  this.infoEl.classList.remove('show');
+  void this.textEl.offsetWidth;
+  this.textEl.classList.add('show');
+  this.infoEl.classList.add('show');
+}
+
+  updateTestimony(animate = false) {
+    if (!this.testimonials.length) return;
+
+    const t = this.testimonials[this.currentIndex];
+    this.textEl.textContent = t.text;
+    this.infoEl.textContent = `${t.gender}, ${t.age}`;
+
+    if (animate) this.animateText();
+  }
+
+
+  startAutoRotate() {
+    this.stopAutoRotate();
+    this.autoRotateTimer = setInterval(() => {
+      if (this.sectionVisible && this.testimonials.length > 1) {
+        this.currentIndex = this.wrap(this.currentIndex + 1);
+        this.updateTestimony(true);
+        this.renderBeans();
+      }
+    }, this.rotateDelay);
+  }
+
+  stopAutoRotate() {
+    if (this.autoRotateTimer) clearInterval(this.autoRotateTimer);
+  }
+
+  setupObserver() {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        this.sectionVisible = entry.isIntersecting;
+        if (this.sectionVisible) {
+          this.updateTestimony(true);
+          this.startAutoRotate();
+        }
+      });
+    }, { threshold: 0.4 });
+
+    observer.observe(this.section);
+  }
+
+  setupResize() {
+    let resizeTimeout = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const old = this.windowSize;
+        this.updateWindowSize();
+        if (old !== this.windowSize) this.renderBeans();
+      }, 150);
+    });
+  }
+
+    loadCSV(path) {
+    fetch(path)
+        .then(r => r.text())
+        .then(text => {
+        const lines = text.trim().split("\n");
+
+        // Extract header names
+        const headers = lines.shift().split(",").map(h => h.trim());
+
+        // Parse each line into an object
+        this.testimonials = lines.map(line => {
+            const cols = line.split(",");
+            const obj = {};
+
+            headers.forEach((h, i) => {
+            obj[h] = (cols[i] || "").trim();
+            });
+
+            return obj;
+        });
+
+        console.log("Parsed testimonials:", this.testimonials);
+
+        this.updateWindowSize();
+        this.updateTestimony(true);
+        this.renderBeans();
+        this.startAutoRotate();
+        });
+    }
+}
+
+const testimonialCarousel = new TestimonialCarousel({
+  beanRow: "beanRow",
+  text: "testimonyText",
+  info: "testimonyInfo",
+  section: "testimonialSection",
+  csv: "Testimony.csv",
+  beanDefault: "src/bean-default.svg",
+  beanActive: "src/bean-clicked.svg",
+  rotateDelay: 8000
+});
 
 
 
@@ -1413,96 +1657,3 @@ window.addEventListener("resize", () => {
     }, 200);
 });
 
-
-
-// const sleepQualityHeatmapSpec = {
-//     data: { url: "caffeine.csv" },
-
-//     width: 800,
-//     height: { step: 100 },
-
-//     transform: [
-
-//         {
-//             bin: { step: 100 },
-//             field: "Caffeine_mg",
-//             as: ["Caffeine_bin", "Caffeine_bin_end"]
-//         },
-
-
-//         {
-//             aggregate: [
-//                 { op: "count", as: "count" }
-//             ],
-//             groupby: ["Caffeine_bin", "Caffeine_bin_end", "Sleep_Quality"]
-//         },
-
-
-//         {
-//             joinaggregate: [
-//                 { op: "sum", field: "count", as: "bin_total" }
-//             ],
-//             groupby: ["Caffeine_bin", "Caffeine_bin_end"]
-//         },
-
-
-//         {
-//             calculate: "datum.count / datum.bin_total",
-//             as: "Proportion"
-//         }
-//     ],
-
-//     mark: "rect",
-
-//     encoding: {
-
-//         x: {
-//             field: "Caffeine_bin",
-//             type: "quantitative",
-//             bin: { binned: true, step: 100 },
-//             title: "Caffeine intake (mg, binned)"
-//         },
-//         x2: { field: "Caffeine_bin_end" },
-
-
-//         y: {
-//             field: "Sleep_Quality",
-//             type: "nominal",
-//             sort: ["Poor", "Fair", "Good", "Excellent"],
-//             title: "Sleep quality"
-//         },
-
-
-//         color: {
-//             field: "Proportion",
-//             type: "quantitative",
-//             title: "Proportion",
-//             axis: { format: "0%" },
-//             scale: {
-//                 range: ["#F8EBD8", "#BF9B77", "#362822"]
-//             }
-//         },
-
-//         tooltip: [
-//             { field: "Caffeine_bin", title: "Caffeine mg (bin start)" },
-//             { field: "Caffeine_bin_end", title: "Caffeine mg (bin end)" },
-//             { field: "Sleep_Quality", title: "Sleep quality" },
-//             {
-//                 field: "Proportion",
-//                 title: "Proportion",
-//                 format: "0.0%"
-//             },
-//             { field: "count", title: "Number of people" }
-//         ]
-//     },
-
-//     config: {
-//         view: { stroke: null },
-//         axis: {
-//             labelFont: "Helvetica",
-//             titleFont: "Helvetica"
-//         }
-//     }
-// };
-
-// vegaEmbed("#sleepQualityHeatmap", sleepQualityHeatmapSpec);
