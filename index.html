@@ -21,6 +21,7 @@
             --font-helvetica: "Helvetica Neue", Helvetica, sans-serif;
             --font-calibri: "Calibri", sans-serif;
 
+            --text-display-base: 2rem;
             --text-display-sm: 2.75rem;
             --text-display-md: 4rem;
             --text-display-lg: 8rem;
@@ -47,79 +48,59 @@
             transform: scale(1.15);
         }
 
-        .bean-line {
-        width: 100%;
-        max-width: 900px;
-        height: 2px;
-        background-color: #00000020;
-        position: relative;
-        top: 28px; /* pushes line downward */
-        z-index: 0;
-        }
-
-        #beanRow {
-        position: relative;
-        z-index: 2; /* beans appear on top */
-        }
-        
-        #beanRow .bean {
-        opacity: 0.4;
-        width: 32px; /* slightly larger base */
-        transition: transform 0.35s ease, opacity 0.35s ease;
-        cursor: pointer;
-        }
-
-        #beanRow .active-bean {
-        opacity: 1;
-        transform: scale(1.25);
-        }
-
-        #beanRow .center-bean {
-        transform: scale(1.9);
-        }
-
-        #beanRow .center-bean.active-bean {
-        transform: scale(2.15);
-        }
-        @layer utilities {
+    /* --- Bean Container --- */
         .bean-row-container {
             display: flex;
-            gap: 14px;
-            transition: transform 0.45s ease;
+            align-items: center;
+            justify-content: center;
+            gap: 80px; /* consistent gap */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
+            will-change: transform;
         }
 
-        .slide-left {
-            transform: translateX(-40px);
+        /* --- Individual Beans --- */
+        .bean-base {
+            width: 40px; 
+            cursor: pointer;
+            opacity: 1;
+            transform: scale(0.7); /* Start small */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        opacity 0.4s ease, 
+                        filter 0.4s ease;
+            /* Prevent layout shift during scale */
+            transform-origin: center center;
         }
 
-        .slide-right {
-            transform: translateX(40px);
-        }
-        }
-
-        #testimonyText {
-            font-size: 1.25rem;
-            line-height: 1.75rem;
-            color: #362822;
-            font-style: italic;
+        /* Active State (Center) */
+        .bean-center {
+            opacity: 1 !important;
+            transform: scale(1.8) !important;
+            z-index: 10;
         }
 
-        #testimonyInfo {
-            font-size: 0.85rem;
-            color: #777;
+        /* --- Text Animation States --- */
+        .testimony-anim {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
 
-        @layer utilities {
-            .testimony-anim {
-                opacity: 0;
-                transform: translateY(12px);
-                transition: opacity 0.55s ease, transform 0.55s ease;
-            }
-
-            .testimony-anim.show {
-                opacity: 1 !important;
-                transform: translateY(0) !important;
-            }
+        .testimony-anim.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Decoration Line */
+        .bean-line {
+            width: 100%;
+            max-width: 800px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0), transparent);
+            position: absolute;
+            top: 28%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
         }
     </style>
 
@@ -472,7 +453,7 @@
 
 
     <!-- A DAY -->
-    <section id="sec7" class="mb-60">
+    <section id="sec7" class="mb-30">
         <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
             <!-- Illustration -->
             <div class="flex justify-start lg:justify-start order-first lg:order-none">
@@ -506,32 +487,49 @@
             </div>
         </section>
 
-        <!-- Testimonials Scroll -->
-        <div id="testimonialSection" class="flex flex-col items-center mt-32 w-full max-w-5xl mx-auto">
+        <!-- Testimony carousel -->
+        <!-- Text -->
+        <div class="relative mt-8 grid grid-cols-1 justify-center items-center px-6 md:px-24 lg:px-44 py-20">
+            <h3 class="font-helvetica font-thin text-display-base md:text-display-base text-espresso mb-6 leading-tight">
+                Our Participants’ Comments On Caffeine & Their Health
+            </h3>
+
+            <p class="font-calibri text-body text-espresso leading-relaxed">
+                We asked participants to comment on their sleep schedule or sleep quality and if they feel drinking coffee 
+                has negatively impacted their health. We recorded the most interesting insights. Click on a coffee bean below to read about what participants say.      
+            </p>
+        </div>
+        <div id="testimonialSection" class="relative flex flex-col items-center mt-8 w-full max-w-5xl mx-auto overflow-hidden py-10">
             <div class="bean-line"></div>
 
-            <div id="beanRow" class="flex items-center gap-10 mb-12"></div>
+            <div class="relative w-full flex justify-center h-24">
+                <div id="beanRow" class="bean-row-container"></div>
+            </div>
 
-            <div class="text-center max-w-2xl px-8">
-                <p id="testimonyText"
-                class="testimony-anim italic text-espresso">
+            <div class="text-center max-w-2xl px-8 mt-6 min-h-[120px]">
+                <p id="testimonyText" class="testimony-anim italic text-espresso text-xl font-serif leading-relaxed">
+                    Loading testimony...
                 </p>
 
-                <p id="testimonyInfo"
-                class="testimony-anim mt-3 text-gray-600">
+                <p id="testimonyInfo" class="testimony-anim mt-3 text-sm text-gray-500 font-sans tracking-wide">
+                    ...
                 </p>
             </div>
         </div>
-        <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+
+        <!-- markers -->
+        <div id="testimonialMarkers" class="flex gap-2 mt-4"></div>
+
+        <div class="relative mt-5 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
             <img 
                 src="src/page6-bean.svg" 
                 class="
                     absolute
-                    top-[40px] left-[40px] w-[110px]
-                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                    md:top-[60px] md:left-[40px] md:w-[140px]
-                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                    top-[40px] right-[40px] w-[110px]
+                    sm:top-[50px] sm:right-[60px] sm:w-[130px]
+                    md:top-[60px] md:right-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:right-[80px] lg:w-[200px]
+                    xl:top-[-50px] xl:right-[100px] xl:w-[230px]
                 "
             />
         </div>

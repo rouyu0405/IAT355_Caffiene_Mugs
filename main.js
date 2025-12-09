@@ -1388,252 +1388,209 @@ renderCoffeeSleepMeanChart();
 
 //testimony scroll
 class TestimonialCarousel {
-  constructor(options) {
-    // Elements
-    this.beanRow = document.getElementById(options.beanRow);
-    this.textEl = document.getElementById(options.text);
-    this.infoEl = document.getElementById(options.info);
-    this.section = document.getElementById(options.section);
+    constructor(options) {
+        // Elements
+        this.beanRow = document.getElementById(options.beanRow);
+        this.textEl = document.getElementById(options.text);
+        this.infoEl = document.getElementById(options.info);
+        this.section = document.getElementById(options.section);
 
-    // Data
-    this.testimonials = [];
-    this.currentIndex = 0;
+        // Data
+        this.testimonials = [];
+        this.currentIndex = 0;
+        this.isAnimating = false; // Lock interactions
 
-    // Layout
-    this.windowSize = 0;
-    this.middleIndex = 0;
+        // Layout
+        this.windowSize = 5; // Keep odd number for center
+        this.middleIndex = Math.floor(this.windowSize / 2);
+        this.beanWidth = 56; 
 
-    // Timer
-    this.autoRotateTimer = null;
-    this.rotateDelay = options.rotateDelay || 8000;
-    this.sectionVisible = false;
+        // Timer
+        this.autoRotateTimer = null;
+        this.rotateDelay = options.rotateDelay || 8000;
+        this.sectionVisible = false;
 
-    // Assets
-    this.beanDefault = options.beanDefault;
-    this.beanActive = options.beanActive;
+        // Assets
+        this.beanDefault = options.beanDefault;
+        this.beanActive = options.beanActive;
 
-    // Init
-    this.setupObserver();
-    this.setupResize();
-    this.loadCSV(options.csv);
-  }
+        // Init
+        this.setupObserver();
+        this.loadCSV("Testimony.csv");
+    }
 
-
-  getWindowSize() {
-    const w = window.innerWidth;
-    if (w < 480) return 3;
-    if (w < 900) return 5;
-    if (w < 1400) return 5;
-    return 5;
-  }
-
-  updateWindowSize() {
-    this.windowSize = this.getWindowSize();
-    this.middleIndex = Math.floor(this.windowSize / 2);
-  }
-
-  wrap(i) {
-    return (i + this.testimonials.length) % this.testimonials.length;
-  }
-
+    wrap(i) {
+        return (i + this.testimonials.length) % this.testimonials.length;
+    }
 
     renderBeans() {
-    if (!this.testimonials.length) return;
+        if (!this.testimonials.length) return;
 
-    this.beanRow.innerHTML = "";
-    const frag = document.createDocumentFragment();
+        this.beanRow.innerHTML = "";
+        const frag = document.createDocumentFragment();
 
-    for (let i = 0; i < this.windowSize; i++) {
-        const realIndex = this.wrap(this.currentIndex - this.middleIndex + i);
-        const bean = document.createElement("img");
+        for (let i = 0; i < this.windowSize; i++) {
+            const realIndex = this.wrap(this.currentIndex - this.middleIndex + i);
+            
+            const bean = document.createElement("img");
+            const isCenter = i === this.middleIndex;
 
-        const isCenter = i === this.middleIndex;
+            bean.src = isCenter ? this.beanActive : this.beanDefault;
+            bean.className = `bean-base ${isCenter ? "bean-center" : ""}`;
+            
+            // Interaction
+            bean.onclick = () => {
+                if (this.isAnimating || i === this.middleIndex) return;
+                
+                // if i < middle, we go left (prev). if i > middle, we go right (next)
+                const direction = i < this.middleIndex ? "left" : "right";
+                
+                const steps = Math.abs(i - this.middleIndex);
+                
+                this.transitionTo(direction, steps);
+            };
 
-        bean.src = isCenter ? this.beanActive : this.beanDefault;
-        bean.className = "bean";
+            frag.appendChild(bean);
+        }
+        this.beanRow.appendChild(frag);
+    }
 
-        // Add animation class
-        if (isCenter) {
-        bean.classList.add("center-bean-anim");
-        } else {
-        bean.classList.add("bean-anim");
+    transitionTo(direction, steps = 1) {
+        if (this.isAnimating) return;
+        this.isAnimating = true;
+        this.stopAutoRotate();
+
+        this.textEl.classList.remove("show");
+        this.infoEl.classList.remove("show");
+
+
+        const offset = direction === "right" ? -this.beanWidth : this.beanWidth;
+        
+        // Apply transform to container
+        this.beanRow.style.transform = `translateX(${offset * steps}px)`;
+
+        // Update classes immediately for visual "Scaling" during the slide
+        const beans = Array.from(this.beanRow.children);
+        // Remove center from current
+        beans[this.middleIndex].classList.remove("bean-center");
+        beans[this.middleIndex].src = this.beanDefault;
+
+        // Add center to the target
+        const nextVisualIndex = direction === "right" ? this.middleIndex + 1 : this.middleIndex - 1;
+        if(beans[nextVisualIndex]) {
+            beans[nextVisualIndex].classList.add("bean-center");
+            beans[nextVisualIndex].src = this.beanActive;
         }
 
-        // Click to jump
-        bean.addEventListener("click", () => {
-        this.currentIndex = realIndex;
-        this.updateTestimony(true);
-        this.renderBeans();
-        });
-
-        frag.appendChild(bean);
-
-        // Force async so CSS transition triggers
-        requestAnimationFrame(() => {
         setTimeout(() => {
-            bean.classList.add("show");
-        }, 10);
-        });
+            // Update logical index
+            if (direction === "right") {
+                this.currentIndex = this.wrap(this.currentIndex + steps);
+            } else {
+                this.currentIndex = this.wrap(this.currentIndex - steps);
+            }
+
+            this.beanRow.style.transition = "none";
+            this.beanRow.style.transform = "translateX(0)";
+            
+            // Re-render DOM in new order
+            this.renderBeans();
+            this.updateTestimonyText(); // Change text content
+
+            // Force browser repaint
+            void this.beanRow.offsetWidth; 
+
+            // Re-enable transitions for next time
+            this.beanRow.style.transition = "";
+
+            this.textEl.classList.add("show");
+            this.infoEl.classList.add("show");
+
+            this.isAnimating = false;
+            this.startAutoRotate();
+
+        }, 400); // Sync with CSS transition duration
     }
 
-    this.beanRow.appendChild(frag);
+    updateTestimonyText() {
+        const t = this.testimonials[this.currentIndex];
+        this.textEl.textContent = t.text;
+        this.infoEl.textContent = `${t.gender}, ${t.age}`;
     }
 
-applyBeanSlide(direction) {
-  this.beanRow.classList.remove("slide-left", "slide-right");
-  void this.beanRow.offsetWidth;
-  if (direction === "left") {
-    this.beanRow.classList.add("slide-left");
-  } else {
-    this.beanRow.classList.add("slide-right");
-  }
-  setTimeout(() => {
-    this.beanRow.classList.remove("slide-left", "slide-right");
-  }, 450);
-}
+    startAutoRotate() {
+        this.stopAutoRotate();
+        this.autoRotateTimer = setInterval(() => {
+            if (this.sectionVisible && !this.isAnimating) {
+                this.transitionTo("right");
+            }
+        }, this.rotateDelay);
+    }
 
+    stopAutoRotate() {
+        if (this.autoRotateTimer) clearInterval(this.autoRotateTimer);
+    }
 
-
-animateText() {
-  const textEl = this.textEl;
-  const infoEl = this.infoEl;
-
-  // cancel existing animations
-  if (textEl.getAnimations) textEl.getAnimations().forEach(a => a.cancel());
-  if (infoEl.getAnimations) infoEl.getAnimations().forEach(a => a.cancel());
-
-  // Keyframes: start slightly down + invisible -> move up + visible
-  const keyframes = [
-    { opacity: 0, transform: 'translateY(12px)' },
-    { opacity: 1, transform: 'translateY(0)' }
-  ];
-
-  const duration = 550; // ms
-
-  // If browser supports Web Animations API
-  if (textEl.animate) {
-    // ensure starting state
-    textEl.style.opacity = 0;
-    textEl.style.transform = 'translateY(12px)';
-    infoEl.style.opacity = 0;
-    infoEl.style.transform = 'translateY(12px)';
-
-    // Animate text
-    textEl.animate(keyframes, {
-      duration,
-      easing: 'cubic-bezier(.2,.9,.3,1)',
-      fill: 'forwards'
-    });
-
-    // Slight stagger for info
-    infoEl.animate(keyframes, {
-      duration,
-      easing: 'cubic-bezier(.2,.9,.3,1)',
-      fill: 'forwards',
-      delay: 80
-    });
-    return;
-  }
-
-  this.textEl.classList.remove('show');
-  this.infoEl.classList.remove('show');
-  void this.textEl.offsetWidth;
-  this.textEl.classList.add('show');
-  this.infoEl.classList.add('show');
-}
-
-  updateTestimony(animate = false) {
-    if (!this.testimonials.length) return;
-
-    const t = this.testimonials[this.currentIndex];
-    this.textEl.textContent = t.text;
-    this.infoEl.textContent = `${t.gender}, ${t.age}`;
-
-    if (animate) this.animateText();
-  }
-
-
-  startAutoRotate() {
-    this.stopAutoRotate();
-    this.autoRotateTimer = setInterval(() => {
-      if (this.sectionVisible && this.testimonials.length > 1) {
-        this.currentIndex = this.wrap(this.currentIndex + 1);
-        this.updateTestimony(true);
-        this.renderBeans();
-      }
-    }, this.rotateDelay);
-  }
-
-  stopAutoRotate() {
-    if (this.autoRotateTimer) clearInterval(this.autoRotateTimer);
-  }
-
-  setupObserver() {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        this.sectionVisible = entry.isIntersecting;
-        if (this.sectionVisible) {
-          this.updateTestimony(true);
-          this.startAutoRotate();
-        }
-      });
-    }, { threshold: 0.4 });
-
-    observer.observe(this.section);
-  }
-
-  setupResize() {
-    let resizeTimeout = null;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        const old = this.windowSize;
-        this.updateWindowSize();
-        if (old !== this.windowSize) this.renderBeans();
-      }, 150);
-    });
-  }
+    setupObserver() {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                this.sectionVisible = entry.isIntersecting;
+                if (this.sectionVisible) {
+                    // Initial animation on scroll into view
+                    this.textEl.classList.add("show");
+                    this.infoEl.classList.add("show");
+                    this.startAutoRotate();
+                } else {
+                    this.stopAutoRotate();
+                }
+            });
+        }, { threshold: 0.4 });
+        observer.observe(this.section);
+    }
 
     loadCSV(path) {
-    fetch(path)
-        .then(r => r.text())
-        .then(text => {
-        const lines = text.trim().split("\n");
+        fetch(path)
+            .then(response => {
+                if (!response.ok) throw new Error("Network response was not ok");
+                return response.text();
+            })
+            .then(text => {
+                const lines = text.trim().split("\n");
+                const headers = lines.shift().split(",").map(h => h.trim());
 
-        // Extract header names
-        const headers = lines.shift().split(",").map(h => h.trim());
+                this.testimonials = lines.map(line => {
+                    const cols = line.split(",");
+                    const obj = {};
+                    
+                    headers.forEach((header, index) => {
+                        obj[header] = (cols[index] || "").trim();
+                    });
 
-        // Parse each line into an object
-        this.testimonials = lines.map(line => {
-            const cols = line.split(",");
-            const obj = {};
+                    return obj;
+                });
 
-            headers.forEach((h, i) => {
-            obj[h] = (cols[i] || "").trim();
+                this.renderBeans();
+                this.updateTestimonyText();
+                this.startAutoRotate();
+            })
+            .catch(error => {
+                console.error("Error loading CSV:", error);
+                // Fallback content in case CSV fails
+                this.textEl.textContent = "Could not load testimonials.";
             });
-
-            return obj;
-        });
-
-        console.log("Parsed testimonials:", this.testimonials);
-
-        this.updateWindowSize();
-        this.updateTestimony(true);
-        this.renderBeans();
-        this.startAutoRotate();
-        });
     }
 }
 
-const testimonialCarousel = new TestimonialCarousel({
-  beanRow: "beanRow",
-  text: "testimonyText",
-  info: "testimonyInfo",
-  section: "testimonialSection",
-  csv: "Testimony.csv",
-  beanDefault: "src/bean-default.svg",
-  beanActive: "src/bean-clicked.svg",
-  rotateDelay: 8000
+// Initialize
+const carousel = new TestimonialCarousel({
+    beanRow: "beanRow",
+    text: "testimonyText",
+    info: "testimonyInfo",
+    section: "testimonialSection",
+    csv: "Testimony.csv",
+    beanDefault: "src/bean-default.svg",
+    beanActive: "src/bean-clicked.svg",
+    rotateDelay: 5000
 });
 
 
