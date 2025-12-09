@@ -47,6 +47,80 @@
             transform: scale(1.15);
         }
 
+        .bean-line {
+        width: 100%;
+        max-width: 900px;
+        height: 2px;
+        background-color: #00000020;
+        position: relative;
+        top: 28px; /* pushes line downward */
+        z-index: 0;
+        }
+
+        #beanRow {
+        position: relative;
+        z-index: 2; /* beans appear on top */
+        }
+        
+        #beanRow .bean {
+        opacity: 0.4;
+        width: 32px; /* slightly larger base */
+        transition: transform 0.35s ease, opacity 0.35s ease;
+        cursor: pointer;
+        }
+
+        #beanRow .active-bean {
+        opacity: 1;
+        transform: scale(1.25);
+        }
+
+        #beanRow .center-bean {
+        transform: scale(1.9);
+        }
+
+        #beanRow .center-bean.active-bean {
+        transform: scale(2.15);
+        }
+        @layer utilities {
+        .bean-row-container {
+            display: flex;
+            gap: 14px;
+            transition: transform 0.45s ease;
+        }
+
+        .slide-left {
+            transform: translateX(-40px);
+        }
+
+        .slide-right {
+            transform: translateX(40px);
+        }
+        }
+
+        #testimonyText {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            color: #362822;
+            font-style: italic;
+        }
+
+        #testimonyInfo {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        @layer utilities {
+            .testimony-anim {
+                opacity: 0;
+                transform: translateY(12px);
+                transition: opacity 0.55s ease, transform 0.55s ease;
+            }
+
+            .testimony-anim.show {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+        }
     </style>
 
 </head>
@@ -190,7 +264,7 @@
 
             <!-- Illustration -->
             <div class="flex justify-center lg:justify-center order-first lg:order-none">
-                <img src="src/page1-cup.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+                <img src="src/page1-cup.svg" class="w-56 md:w-72 lg:w-[26rem]" />
             </div>
         </div>
 
@@ -221,14 +295,14 @@
                     top-[40px] left-[40px] w-[110px]
                     sm:top-[50px] sm:left-[60px] sm:w-[130px]
                     md:top-[60px] md:left-[40px] md:w-[140px]
-                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                    lg:top-[-10px] lg:left-[120px] lg:w-[200px]
+                    xl:top-[-20px] xl:left-[150px] xl:w-[230px]
                 "
             />
 
             <!-- Text -->
             <div>
-                <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
+                <h2 class="font-helvetica mt-30 font-thin text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
                     Caffeine vs Sleep Hours
                 </h2>
                 <p class="font-calibri text-body text-espresso leading-relaxed">
@@ -240,7 +314,7 @@
 
             <!-- Illustration -->
             <div class="flex justify-center lg:justify-center order-first lg:order-none">
-                <img src="src\page2-img.svg" class="w-56 md:w-72 lg:w-[22rem]" />
+                <img src="src\page2-img.svg" class="w-56 md:w-72 lg:w-[26rem]" />
             </div>
         </div>
 
@@ -258,11 +332,11 @@
                 src="src/page3-bean.svg" 
                 class="
                     absolute
-                    top-[40px] left-[40px] w-[110px]
-                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                    md:top-[60px] md:left-[40px] md:w-[140px]
-                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                    top-[40px] right-[40px] w-[110px]
+                    sm:top-[50px] sm:right-[60px] sm:w-[130px]
+                    md:top-[60px] md:right-[40px] md:w-[140px]
+                    lg:top-[-60px] lg:right-[80px] lg:w-[200px]
+                    xl:top-[-70px] xl:right-[100px] xl:w-[230px]
                 "
             />
             <!-- Illustration -->
@@ -325,11 +399,11 @@
                 src="src/page4-bean.svg" 
                 class="
                     absolute
-                    top-[40px] left-[40px] w-[110px]
-                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                    md:top-[60px] md:left-[40px] md:w-[140px]
-                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                    top-[40px] right-[40px] w-[110px]
+                    sm:top-[50px] sm:right-[60px] sm:w-[130px]
+                    md:top-[60px] md:right-[40px] md:w-[140px]
+                    lg:top-[-60px] lg:right-[80px] lg:w-[200px]
+                    xl:top-[-70px] xl:right-[100px] xl:w-[230px]
                 "
             />
             <!-- Illustration -->
@@ -364,11 +438,11 @@
                 src="src/page5-bean.svg" 
                 class="
                     absolute
-                    top-[40px] left-[40px] w-[110px]
-                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                    md:top-[60px] md:left-[40px] md:w-[140px]
-                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                    top-[40px] right-[40px] w-[110px]
+                    sm:top-[50px] sm:right-[60px] sm:w-[130px]
+                    md:top-[60px] md:right-[40px] md:w-[140px]
+                    lg:top-[-60px] lg:right-[80px] lg:w-[200px]
+                    xl:top-[-70px] xl:right-[100px] xl:w-[230px]
                 "
             />
             <!-- Illustration -->
@@ -400,20 +474,9 @@
     <!-- A DAY -->
     <section id="sec7" class="mb-60">
         <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
-            <img 
-                src="src/page6-bean.svg" 
-                class="
-                    absolute
-                    top-[40px] left-[40px] w-[110px]
-                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
-                    md:top-[60px] md:left-[40px] md:w-[140px]
-                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
-                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
-                "
-            />
             <!-- Illustration -->
             <div class="flex justify-start lg:justify-start order-first lg:order-none">
-                <img src="src\page6-img.svg" class="w-66 md:w-82 lg:w-[28rem]" />
+                <img src="src/page6-img.svg" class="w-66 md:w-82 lg:w-[28rem]" />
             </div>
 
             <!-- Text -->
@@ -442,6 +505,36 @@
                 <div class="mt-12" id="coffeeSleepMeanChart"></div>
             </div>
         </section>
+
+        <!-- Testimonials Scroll -->
+        <div id="testimonialSection" class="flex flex-col items-center mt-32 w-full max-w-5xl mx-auto">
+            <div class="bean-line"></div>
+
+            <div id="beanRow" class="flex items-center gap-10 mb-12"></div>
+
+            <div class="text-center max-w-2xl px-8">
+                <p id="testimonyText"
+                class="testimony-anim italic text-espresso">
+                </p>
+
+                <p id="testimonyInfo"
+                class="testimony-anim mt-3 text-gray-600">
+                </p>
+            </div>
+        </div>
+        <div class="relative mt-30 grid grid-cols-1 lg:grid-cols-2 gap-10 justify-center items-center px-6 md:px-14 lg:px-24 py-20">
+            <img 
+                src="src/page6-bean.svg" 
+                class="
+                    absolute
+                    top-[40px] left-[40px] w-[110px]
+                    sm:top-[50px] sm:left-[60px] sm:w-[130px]
+                    md:top-[60px] md:left-[40px] md:w-[140px]
+                    lg:top-[-40px] lg:left-[480px] lg:w-[200px]
+                    xl:top-[-50px] xl:left-[560px] xl:w-[230px]
+                "
+            />
+        </div>
     </section>
 
 
@@ -451,7 +544,7 @@
 
             <!-- Illustration -->
             <div class="lg:col-span-5 flex justify-center lg:justify-start">
-                <img src="src\index-cup.svg" class="w-64 md:w-72 lg:w-[26rem]" />
+                <img src="src/page7-img.svg" class="w-64 md:w-72 lg:w-[26rem]" />
             </div>
 
             <!-- Text -->
@@ -695,15 +788,267 @@
                 Final Insights
             </h2>
 
-            <p class="font-calibri text-body text-espresso mt-6 max-w-3xl leading-relaxed">
-                Now it’s time to reflect on what you have learned about caffeine and your health. You might be surprised
-                to see how your habits compare to others.
+            <p class="font-calibri text-body text-espresso mt-6 leading-relaxed">
+                Our visualizations show that caffeine intake relates to several aspects of daily life, including sleep duration, sleep quality, 
+                physical activity, and stress levels. We also notice clear differences in coffee habits across age groups and genders. These patterns reveal a 
+                variety in how people use caffeine and how their bodies respond to it.<br><br>
+            
+                The trends we discovered offer interesting insights and help us understand why people drink 
+                coffee and how it may influence their well-being. With more data in the future, such as occupation, 
+                region, or lifestyle factors, we could explore even richer relationships and uncover new perspectives<br><br>
+            
+                It is important to recognize that the impact of caffeine does not follow a single rule. Each person has 
+                a unique physical condition, sensitivity, and tolerance level. The charts in this project should be viewed as 
+                observations rather than health guidance. In reality, the most reliable approach is to pay attention to your own 
+                body, notice how your energy, sleep, and stress levels change, and adjust your habits based on what works for you.<br><br>
+
+                We hope these visualizations encourage you to reflect on your routines, make choices that support your learning and 
+                daily life, and explore the activities that help you relax and recharge in a way that feels right for you.
             </p>
         </div>
     </section>
 
     <!-- Script -->
     <script src="main.js"></script>
+    <!-- Tooltip (used by JS) -->
+    <div id="tooltip"
+        class="absolute px-2 py-1 text-xs font-helvetica bg-[#362822] text-white rounded hidden pointer-events-none"
+        style="z-index:999; transform:translate(-50%, -120%);">
+    </div>
+
+    <!-- Page-specific JS -->
+    <script>
+        let caffeineData = [];
+        let dataLoaded = false;
+
+        // Read caffeine.csv
+        fetch("caffeine.csv")
+            .then(response => response.text())
+            .then(text => {
+                const lines = text.trim().split("\n");
+                const headers = lines[0].split(",");
+                caffeineData = lines.slice(1).map(line => {
+                    const values = line.split(",");
+                    const row = {};
+                    headers.forEach((h, i) => {
+                        const key = h.trim();
+                        const value = values[i] ? values[i].trim() : "";
+                        const num = Number(value);
+                        row[key] = isNaN(num) ? value : num;
+                    });
+                    return row;
+                });
+
+                dataLoaded = true;
+                document.getElementById("loadingMessage").innerText =
+                    "Enter your information on the left and see how you compare to our research.";
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById("loadingMessage").innerText =
+                    "Could not load the dataset. Please check the file path.";
+            });
+
+        // Percentile helper
+        function getPercentile(values, x) {
+            const filtered = values.filter(v => typeof v === "number" && !isNaN(v));
+            if (!filtered.length) return null;
+            filtered.sort((a, b) => a - b);
+            const count = filtered.filter(v => v <= x).length;
+            return Math.round((count / filtered.length) * 100);
+        }
+
+        // Map numeric value to 0–100% left position
+        function getPosition(values, x) {
+            const filtered = values.filter(v => typeof v === "number" && !isNaN(v));
+            if (!filtered.length) return 50;
+            const min = Math.min(...filtered);
+            const max = Math.max(...filtered);
+            if (max === min) return 50;
+            const t = (x - min) / (max - min);
+            return Math.max(0, Math.min(100, t * 100));
+        }
+
+        // Map dataset stress levels (Low/Medium/High) to numeric scores
+        function levelToScore(level) {
+            if (level === "Low") return 3;
+            if (level === "Medium") return 6;
+            if (level === "High") return 9;
+            return 6;
+        }
+
+        // Map a 1–10 stress score to a 0–100 position
+        function stressScoreToPos(score) {
+            if (isNaN(score)) return 50;
+            const t = (score - 1) / 9;
+            return Math.max(0, Math.min(100, t * 100));
+        }
+
+        // Tooltip base
+        const tooltip = document.getElementById("tooltip");
+
+        function attachTooltip(targetId, text) {
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            const wrapper = target.parentElement;
+            if (!wrapper) return;
+
+            // Store text for later updates
+            wrapper.dataset.tooltipText = text;
+
+            // Avoid binding multiple listeners
+            if (wrapper.dataset.tooltipAttached === "true") {
+                return;
+            }
+            wrapper.dataset.tooltipAttached = "true";
+
+            wrapper.addEventListener("mouseenter", () => {
+                tooltip.innerText = wrapper.dataset.tooltipText || "";
+                tooltip.classList.remove("hidden");
+            });
+
+            wrapper.addEventListener("mouseleave", () => {
+                tooltip.classList.add("hidden");
+            });
+
+            wrapper.addEventListener("mousemove", (e) => {
+                tooltip.style.left = e.pageX + "px";
+                tooltip.style.top = e.pageY + "px";
+                tooltip.innerText = wrapper.dataset.tooltipText || "";
+            });
+        }
+
+        function analyzeHealth() {
+            if (!dataLoaded) {
+                alert("Dataset is still loading. Please try again in a moment.");
+                return;
+            }
+
+            const gender = document.getElementById("genderInput").value;
+            const age = Number(document.getElementById("ageInput").value);
+            const cups = Number(document.getElementById("coffeeInput").value);
+            const sleep = Number(document.getElementById("sleepInput").value);
+            const stressScore = Number(document.getElementById("stressInput").value);
+
+            if (!age || isNaN(cups) || isNaN(sleep) || isNaN(stressScore)) {
+                alert("Please fill in age, coffee intake, sleep hours, and stress level.");
+                return;
+            }
+
+            // Base group: full dataset or same-gender subset
+            let group = caffeineData;
+            if (gender) {
+                const filtered = caffeineData.filter(d => d.Gender === gender);
+                if (filtered.length > 30) {
+                    group = filtered;
+                }
+            }
+
+            const intakeValues = group.map(d => d.Coffee_Intake);
+            const sleepValues = group.map(d => d.Sleep_Hours);
+
+            const coffeePct = getPercentile(intakeValues, cups);
+            const sleepPct = getPercentile(sleepValues, sleep);
+
+            const avgCoffee = intakeValues.reduce((a, b) => a + b, 0) / intakeValues.length;
+            const avgSleep = sleepValues.reduce((a, b) => a + b, 0) / sleepValues.length;
+
+            // Summary text
+            const summaryParts = [];
+            summaryParts.push(
+                `You are ${age} years old and reported ${cups.toFixed(1)} cups of coffee per day with ${sleep.toFixed(1)} hours of sleep.`
+            );
+            if (gender) {
+                summaryParts.push(
+                    `The visualisation uses people of the same gender when there are enough records, otherwise it uses the full dataset.`
+                );
+            } else {
+                summaryParts.push(`The visualisation uses the full dataset.`);
+            }
+            document.getElementById("summaryText").innerText = summaryParts.join(" ");
+
+            // Coffee position + label
+            const coffeePosYou = getPosition(intakeValues, cups);
+            const coffeePosAvg = getPosition(intakeValues, avgCoffee);
+            document.getElementById("coffeeYouWrap").style.left = coffeePosYou + "%";
+            document.getElementById("coffeeAvgWrap").style.left = coffeePosAvg + "%";
+
+            const coffeeLabelText = coffeePct != null
+                ? `${cups.toFixed(1)} cups • higher than about ${coffeePct}% of this group`
+                : `${cups.toFixed(1)} cups`;
+            document.getElementById("coffeeLabel").innerText = coffeeLabelText;
+
+            // Sleep position + label
+            const sleepPosYou = getPosition(sleepValues, sleep);
+            const sleepPosAvg = getPosition(sleepValues, avgSleep);
+            document.getElementById("sleepYouWrap").style.left = sleepPosYou + "%";
+            document.getElementById("sleepAvgWrap").style.left = sleepPosAvg + "%";
+
+            const sleepLabelText = sleepPct != null
+                ? `${sleep.toFixed(1)} hours • higher than about ${sleepPct}% of this group`
+                : `${sleep.toFixed(1)} hours`;
+            document.getElementById("sleepLabel").innerText = sleepLabelText;
+
+            // Stress: compare within similar coffee intake group (±1 cup)
+            const similarCoffeeGroup = group.filter(d =>
+                typeof d.Coffee_Intake === "number" &&
+                !isNaN(d.Coffee_Intake) &&
+                Math.abs(d.Coffee_Intake - cups) <= 1
+            );
+            const stressGroup = similarCoffeeGroup.length >= 30 ? similarCoffeeGroup : group;
+
+            const stressValues = stressGroup
+                .map(d => levelToScore(d.Stress_Level))
+                .filter(v => typeof v === "number" && !isNaN(v));
+
+            let stressLabel = "";
+            let stressComparison = "";
+
+            if (stressValues.length > 0) {
+                const avgStress = stressValues.reduce((a, b) => a + b, 0) / stressValues.length;
+                const stressPct = getPercentile(stressValues, stressScore);
+
+                if (stressPct > 66) {
+                    stressComparison = "higher than most people with a similar coffee intake";
+                } else if (stressPct < 33) {
+                    stressComparison = "lower than many people with a similar coffee intake";
+                } else {
+                    stressComparison = "similar to most people with a similar coffee intake";
+                }
+
+                stressLabel =
+                    `You rated ${stressScore}/10 • your stress is ${stressComparison}.`;
+            } else {
+                stressLabel = `You rated ${stressScore}/10 • we could not find enough similar records to compare.`;
+            }
+
+            // Stress position + label
+            const stressPos = stressScoreToPos(stressScore);
+            document.getElementById("stressYouWrap").style.left = stressPos + "%";
+            document.getElementById("stressLabel").innerText = stressLabel;
+
+            // Tooltips
+            if (coffeePct != null) {
+                attachTooltip("coffeeYou", `${coffeePct}% of people drink less than or equal to you`);
+            } else {
+                attachTooltip("coffeeYou", `Your coffee intake: ${cups.toFixed(1)} cups/day`);
+            }
+            attachTooltip("coffeeAvg", `Group average: ${avgCoffee.toFixed(1)} cups/day`);
+
+            if (sleepPct != null) {
+                attachTooltip("sleepYou", `${sleepPct}% of people sleep less than or equal to you`);
+            } else {
+                attachTooltip("sleepYou", `Your sleep: ${sleep.toFixed(1)} hours`);
+            }
+            attachTooltip("sleepAvg", `Group average: ${avgSleep.toFixed(1)} hours`);
+
+            attachTooltip("stressYou", `Your stress: ${stressScore}/10${stressComparison ? " • " + stressComparison : ""}`);
+
+            // Reveal visualisation
+            document.getElementById("loadingMessage").classList.add("hidden");
+            document.getElementById("vizContainer").classList.remove("hidden");
+        }
+    </script>
 
     <!-- Footer -->
     <footer
