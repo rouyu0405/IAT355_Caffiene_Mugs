@@ -402,7 +402,8 @@
 
             <!-- Chart -->
             <div class="mt-10 flex flex-col items-center w-full col-span-full">
-                <div id="coffeeActivityByAgeSummary" class="mt-16 w-full max-w-7xl mx-auto"></div>
+                <div id="coffeeActivityByAgeSummary" class="mt-16 max-w-[850px] mx-auto"></div>
+
             </div>
 
 
@@ -459,7 +460,7 @@
             <div class="col-span-3">
                 <h2
                     class="font-helvetica font-thin lg:mt-30 text-display-sm md:text-display-md text-espresso mb-6 leading-tight">
-                    A Day In The Life Of A Coffee Lover
+                    A Day In The Life of A Coffee Lover
                 </h2>
 
                 <p class="font-calibri text-body text-espresso leading-relaxed">
@@ -475,28 +476,45 @@
 
         <!-- Chart -->
         <section class="w-full mt-12 max-w-6xl mx-auto">
-            <h2 class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mb-4">
+
+            <!-- Title 1 -->
+            <h2 class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mt-16 mb-6 text-left">
                 Age Group & Gender Summary of Participants
             </h2>
-            <div class="flex flex-col md:flex-row justify-end items-end gap-10">
-                <div id="ageChart" class="w-full md:w-1/2"></div>
-                <div id="genderChart" class="w-full md:w-1/2"></div>
+
+            <!-- Age & Gender charts (side by side) -->
+            <div class="flex flex-col md:flex-row justify-center items-start gap-10">
+                <div id="ageChart" class="w-full md:w-1/2 mx-auto"></div>
+                <div id="genderChart" class="w-full md:w-1/2 mx-auto"></div>
             </div>
-            <div class=" mt-10 flex flex-col items-center">
-                <h2 class="font-helvetica font-semibold mt-25 text-link-sm md:text-link-md text-espresso mb-4">
+
+            <div class="mt-16 flex flex-col">
+
+                <!-- Title 2 -->
+                <h2
+                    class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mt-16 mb-6 text-left">
                     Coffee Intake vs Gender
                 </h2>
-                <div class="mt-2" id="genderCoffeeChart"></div>
-                <h2 class="font-helvetica font-semibold mt-25 text-link-sm md:text-link-md text-espresso mb-4">
+                <div id="genderCoffeeChart" class="mt-4 mx-auto max-w-[900px]"></div>
+
+                <!-- Title 3 -->
+                <h2
+                    class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mt-16 mb-6 text-left">
                     Our Participants Reasons For Consuming Coffee
                 </h2>
-                <div id="weekdayActivityChart" class="w-full mx-auto"></div>
-                <h2 class="font-helvetica font-semibold mt-25 text-link-sm md:text-link-md text-espresso mb-4">
+                <div id="weekdayActivityChart" class="mt-4 mx-auto max-w-[900px]"></div>
+
+                <!-- Title 4 -->
+                <h2
+                    class="font-helvetica font-semibold text-link-sm md:text-link-md text-espresso mt-16 mb-6 text-left">
                     Daily Coffee Intake vs Sleep Duration of Participants
                 </h2>
-                <div class="mt-2" id="coffeeSleepMeanChart"></div>
+                <div id="coffeeSleepMeanChart" class="mt-4 mx-auto max-w-[900px]"></div>
+
             </div>
         </section>
+
+
 
         <!-- Testimony carousel -->
         <!-- Text -->
@@ -817,7 +835,7 @@
         </section>
 
         <!-- Final Insights -->
-        <div class="mt-24 w-full lg:pr-44 md:pr-20">
+        <div class="mt-24 w-full">
             <h2 class="font-helvetica font-thin text-display-sm md:text-display-md text-espresso">
                 Final Insights
             </h2>

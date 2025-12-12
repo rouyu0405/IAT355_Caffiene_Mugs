@@ -247,7 +247,11 @@ const sleepQualityBaseSpec = {
                         range: ["#362822", "#1A3447", "#F0C376", "#6E6E6E"]
                     },
                     legend: { title: "Sleep quality" }
-                }
+                },
+                tooltip: [
+                    { field: "Sleep_Quality", title: "Sleep quality" },
+                    { field: "Caffeine_mg", title: "Caffeine (mg)" }
+                ]
             }
         },
 
@@ -994,7 +998,6 @@ const genderCoffeeBaseSpec = {
         }
     ],
 
-    // width and height will be added dynamically in renderGenderCoffeeChart
 
     mark: {
         type: "boxplot",
@@ -1041,8 +1044,7 @@ const genderCoffeeBaseSpec = {
     }
 };
 
-// Render Gender vs Coffee chart (responsive)
-// Render Gender vs Coffee chart (responsive, width and height scale together)
+
 function renderGenderCoffeeChart() {
     const container = document.getElementById("genderCoffeeChart");
     if (!container) return;
@@ -1119,7 +1121,7 @@ const weekdayActivityBaseSpec = {
                         labelFont: "Calibri",
                         labelFontSize: 20,
                         labelFontWeight: "bold",
-                        labelColor: "#4A2B18",
+                        labelColor: "#362822",
                         labelPadding: 15,
                         labelLimit: 0
                     }
