@@ -156,6 +156,11 @@ const sleepQualityStackedBaseSpec = {
 
     mark: "bar",
 
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
+
     encoding: {
         x: {
             field: "Caffeine_mg",
@@ -225,7 +230,12 @@ function renderSleepQualityStackedChart() {
         height: chartHeight
     };
 
-    vegaEmbed("#sleepQuality", withGlobalConfig(sleepQualityStackedSpec), { actions: false });
+    vegaEmbed("#sleepQuality", withGlobalConfig(sleepQualityStackedSpec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
 }
 
 
@@ -233,6 +243,10 @@ const sleepQualityBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
     data: { url: "caffeine.csv" },
 
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
 
     transform: [
         {
@@ -353,9 +367,13 @@ function renderSleepQualityChart() {
         });
     }
 
-    vegaEmbed("#sleepQualityScatter", withGlobalConfig(sleepQualityJitterSpec), { actions: false });
+    vegaEmbed("#sleepQualityScatter", withGlobalConfig(sleepQualityJitterSpec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
 }
-
 
 // Initial render
 renderSleepQualityChart();
@@ -370,8 +388,10 @@ const coffeeByAgeSpec = {
         point: true
     },
 
-    width: 800,
-    height: 650,
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
 
     encoding: {
         x: {
@@ -425,14 +445,42 @@ const coffeeByAgeSpec = {
     }
 };
 
-vegaEmbed("#coffeeByAge", withGlobalConfig(coffeeByAgeSpec));
+function renderCoffeeByAgeChart() {
+    const container = document.getElementById("coffeeByAge");
+    if (!container) return;
 
+    const containerWidth = container.clientWidth || 700;
+
+    const aspectRatio = 0.8; 
+    let chartHeight = containerWidth * aspectRatio;
+
+    chartHeight = Math.max(300, Math.min(chartHeight, 700));
+
+    const spec = {
+        ...coffeeByAgeSpec,
+        width: containerWidth,
+        height: chartHeight
+    };
+
+    vegaEmbed("#coffeeByAge", withGlobalConfig(spec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
+}
+renderCoffeeByAgeChart();
 
 
 const stressCoffeeBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: { url: "caffeine.csv" },
+
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
 
     layer: [
         // Layer 1: boxplot
@@ -524,7 +572,12 @@ function renderStressCoffeeChart() {
     stressCoffeeSpec.width = chartWidth;
     stressCoffeeSpec.height = chartHeight;
 
-    vegaEmbed("#stressCoffee", withGlobalConfig(stressCoffeeSpec), { actions: false });
+    vegaEmbed("#stressCoffee", withGlobalConfig(stressCoffeeSpec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
 }
 renderStressCoffeeChart();
 
@@ -533,6 +586,11 @@ const coffeeActivityByAgeSummaryBaseSpec = {
     $schema: "https://vega.github.io/schema/vega-lite/v5.json",
 
     data: { url: "caffeine.csv" },
+
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
 
     transform: [
         {
@@ -640,10 +698,13 @@ function renderCoffeeActivityByAgeSummary() {
     spec.spec.width = perFacetWidth;
     spec.spec.height = perFacetHeight;
 
-    vegaEmbed("#coffeeActivityByAgeSummary", withGlobalConfig(spec), { actions: false });
+    vegaEmbed("#coffeeActivityByAgeSummary", withGlobalConfig(spec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
 }
-
-
 
 renderCoffeeActivityByAgeSummary();
 
