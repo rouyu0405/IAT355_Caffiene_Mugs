@@ -1043,6 +1043,11 @@ const genderCoffeeBaseSpec = {
         url: "Responses.csv"
     },
 
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
+
     transform: [
         {
             // Create a clean gender field
@@ -1114,14 +1119,14 @@ function renderGenderCoffeeChart() {
     if (!container) return;
 
     // Get current container width
-    let containerWidth = container.clientWidth || 420;
+    let containerWidth = container.clientWidth || 620;
 
     // Allow the chart to grow up to maxWidth
-    const maxWidth = 600;
+    const maxWidth = 700;
     const chartWidth = Math.min(containerWidth, maxWidth);
 
     // Base design size
-    const baseWidth = 420;
+    const baseWidth = 470;
     const baseHeight = 320;
 
     // Keep the same aspect ratio as the base chart
@@ -1135,7 +1140,12 @@ function renderGenderCoffeeChart() {
         height: chartHeight
     };
 
-    vegaEmbed("#genderCoffeeChart", withGlobalConfig(genderCoffeeSpec), { actions: false });
+    vegaEmbed("#genderCoffeeChart", withGlobalConfig(genderCoffeeSpec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
 }
 
 // Initial render
@@ -1305,6 +1315,11 @@ const coffeeSleepMeanBaseSpec = {
 
     data: { url: "Responses.csv" },
 
+    autosize: {
+        type: "fit",
+        contains: "padding"
+    },
+
     transform: [
         // Parse coffee cups into a numeric field
         {
@@ -1426,10 +1441,10 @@ function renderCoffeeSleepMeanChart() {
     if (!container) return;
 
     // Get current container width
-    let containerWidth = container.clientWidth || 520;
+    let containerWidth = container.clientWidth || 620;
 
     // Allow chart to grow up to a larger maximum width if needed
-    const maxWidth = 600;
+    const maxWidth = 700;
     const chartWidth = Math.min(containerWidth, maxWidth);
 
     // Base design dimensions
@@ -1447,7 +1462,12 @@ function renderCoffeeSleepMeanChart() {
         height: chartHeight
     };
 
-    vegaEmbed("#coffeeSleepMeanChart", withGlobalConfig(coffeeSleepMeanSpec), { actions: false });
+    vegaEmbed("#coffeeSleepMeanChart", withGlobalConfig(coffeeSleepMeanSpec), { actions: false }).then(result => {
+        if (result.view && container.firstChild) {
+            container.firstChild.style.display = 'block';
+            container.firstChild.style.margin = '0 auto';
+        }
+    });
 }
 
 
