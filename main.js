@@ -445,31 +445,8 @@ const coffeeByAgeSpec = {
     }
 };
 
-function renderCoffeeByAgeChart() {
-    const container = document.getElementById("coffeeByAge");
-    if (!container) return;
+vegaEmbed("#coffeeByAge", withGlobalConfig(coffeeByAgeSpec));
 
-    const containerWidth = container.clientWidth || 700;
-
-    const aspectRatio = 0.8; 
-    let chartHeight = containerWidth * aspectRatio;
-
-    chartHeight = Math.max(300, Math.min(chartHeight, 700));
-
-    const spec = {
-        ...coffeeByAgeSpec,
-        width: containerWidth,
-        height: chartHeight
-    };
-
-    vegaEmbed("#coffeeByAge", withGlobalConfig(spec), { actions: false }).then(result => {
-        if (result.view && container.firstChild) {
-            container.firstChild.style.display = 'block';
-            container.firstChild.style.margin = '0 auto';
-        }
-    });
-}
-renderCoffeeByAgeChart();
 
 
 const stressCoffeeBaseSpec = {
